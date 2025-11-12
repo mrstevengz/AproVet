@@ -30,23 +30,23 @@
 	      username="root" password="" 
 	      driverClassName="com.mysql.cj.jdbc.Driver"
 	      url="jdbc:mysql://localhost:3306/Aprovetdb"/>	      
-	-->      
-	
-	<!-- PostgreSQL 
-	<Resource name="jdbc/AprovetDS" auth="Container" type="javax.sql.DataSource"
-	      maxTotal="20" maxIdle="5" maxWaitMillis="10000"
-	      username="postgres" password="" 
-	      driverClassName="org.postgresql.Driver" 
-	      url="jdbc:postgresql://localhost/Aprovetdb"/>
 	-->
-	
-	<!-- Oracle 
-	<Resource name="jdbc/AprovetDS" auth="Container" type="javax.sql.DataSource"
-	      maxTotal="20" maxIdle="5" maxWaitMillis="10000"
-	      username="user" password="" 
-	      driverClassName="oracle.jdbc.OracleDriver"
-	      url="jdbc:oracle:thin:@localhost:1521:Aprovetdb"/>
-	-->	
+
+    <!-- PosgrestreSQL
+        <Resource name="jdbc/AprovetDS" auth="Container" type="javax.sql.DataSource"
+              maxTotal="20" maxIdle="5" maxWaitMillis="10000"
+              username="postgres" password=""
+              driverClassName="org.postgresql.Driver"
+              url="jdbc:postgresql://localhost/Aprovetdb"/>
+     -->
+
+    <!-- Oracle
+    <Resource name="jdbc/AprovetDS" auth="Container" type="javax.sql.DataSource"
+          maxTotal="20" maxIdle="5" maxWaitMillis="10000"
+          username="user" password=""
+          driverClassName="oracle.jdbc.OracleDriver"
+          url="jdbc:oracle:thin:@localhost:1521:Aprovetdb"/>
+    -->
 	
 	<!-- AS/400 
 	<Resource name="jdbc/AprovetDS" auth="Container" type="javax.sql.DataSource"
