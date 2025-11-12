@@ -11,9 +11,10 @@ import javax.persistence.*;
 @Setter
 public class Trabajador {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name= "id_Trabajador",  unique = true, nullable=false)
-    private long id_Trabajador;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Mejor para PostgreSQL
+    @Column(name = "id_trabajador", unique = true, nullable = false)
+    @org.openxava.annotations.Hidden
+    private Long idTrabajador;
 
     @Required
     @Column(name= "nombre_Trabajador", length=50, nullable=false)

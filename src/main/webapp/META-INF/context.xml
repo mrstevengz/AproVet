@@ -17,7 +17,7 @@
 	correspodiente a tu base de datos al pom.xml de tu proyecto.	
 	-->
 	 
-	<!-- HSQLDB
+    <!-- HSQLDB
     <Resource name="jdbc/AprovetDS" auth="Container" type="javax.sql.DataSource"
 	      maxTotal="20" maxIdle="5" maxWaitMillis="10000"
 	      username="sa" password="" 
@@ -36,10 +36,10 @@
 	<!-- PostgreSQL
 	<Resource name="jdbc/AprovetDS" auth="Container" type="javax.sql.DataSource"
 	      maxTotal="20" maxIdle="5" maxWaitMillis="10000"
-	      username="postgres" password="" 
+	      username="postgres" password="allan123"
 	      driverClassName="org.postgresql.Driver" 
 	      url="jdbc:postgresql://localhost/Aprovetdb"/>
-	-->
+    -->
 	
 	<!-- Oracle 
 	<Resource name="jdbc/AprovetDS" auth="Container" type="javax.sql.DataSource"
