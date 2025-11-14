@@ -17,75 +17,77 @@
 	correspodiente a tu base de datos al pom.xml de tu proyecto.	
 	-->
 	 
-	<!-- HSQLDB -->   	
-    <Resource name="jdbc/AprovetDS" auth="Container" type="javax.sql.DataSource"
+	<!-- HSQLDB
+    <Resource name="jdbc/SistemaAprovetDS" auth="Container" type="javax.sql.DataSource"
 	      maxTotal="20" maxIdle="5" maxWaitMillis="10000"
 	      username="sa" password="" 
 	      driverClassName="org.hsqldb.jdbc.JDBCDriver"
 	      url="jdbc:hsqldb:hsql://localhost:1666"/>
-	      
-	<!-- MySQL       
-    <Resource name="jdbc/AprovetDS" auth="Container" type="javax.sql.DataSource"
-	      maxTotal="20" maxIdle="5" maxWaitMillis="10000"
-	      username="root" password="" 
-	      driverClassName="com.mysql.cj.jdbc.Driver"
-	      url="jdbc:mysql://localhost:3306/Aprovetdb"/>	      
-	-->      
+
+	  -->
+
+    <!-- MySQL
+    <Resource name="jdbc/SistemaAprovetDS" auth="Container" type="javax.sql.DataSource"
+          maxTotal="20" maxIdle="5" maxWaitMillis="10000"
+          username="root" password=""
+          driverClassName="com.mysql.cj.jdbc.Driver"
+          url="jdbc:mysql://localhost:3306/SistemaAprovetdb"/>
+    -->
 	
-	<!-- PostgreSQL 
-	<Resource name="jdbc/AprovetDS" auth="Container" type="javax.sql.DataSource"
+	<!-- PostgreSQL -->
+    <Resource name="jdbc/SistemaAprovetDS" auth="Container" type="javax.sql.DataSource"
 	      maxTotal="20" maxIdle="5" maxWaitMillis="10000"
-	      username="postgres" password="" 
+	      username="postgres" password="123"
 	      driverClassName="org.postgresql.Driver" 
-	      url="jdbc:postgresql://localhost/Aprovetdb"/>
+	      url="jdbc:postgresql://localhost/Aprovet"/>
 	-->
 	
 	<!-- Oracle 
-	<Resource name="jdbc/AprovetDS" auth="Container" type="javax.sql.DataSource"
+	<Resource name="jdbc/SistemaAprovetDS" auth="Container" type="javax.sql.DataSource"
 	      maxTotal="20" maxIdle="5" maxWaitMillis="10000"
 	      username="user" password="" 
 	      driverClassName="oracle.jdbc.OracleDriver"
-	      url="jdbc:oracle:thin:@localhost:1521:Aprovetdb"/>
+	      url="jdbc:oracle:thin:@localhost:1521:SistemaAprovetdb"/>
 	-->	
 	
 	<!-- AS/400 
-	<Resource name="jdbc/AprovetDS" auth="Container" type="javax.sql.DataSource"
+	<Resource name="jdbc/SistemaAprovetDS" auth="Container" type="javax.sql.DataSource"
 	      maxTotal="20" maxIdle="5" maxWaitMillis="10000"
 	      username="user" password="" 
 	      driverClassName="com.ibm.as400.access.AS400JDBCDriver" 
-	      url="jdbc:as400:localhost/Aprovetlib"/>
+	      url="jdbc:as400:localhost/SistemaAprovetlib"/>
 	-->
 	
 	<!-- Microsoft SQL Server
-	<Resource name="jdbc/AprovetDS" auth="Container" type="javax.sql.DataSource"
+	<Resource name="jdbc/SistemaAprovetDS" auth="Container" type="javax.sql.DataSource"
 	      maxTotal="20" maxIdle="5" maxWaitMillis="10000"
 	      username="user" password="" 
 	      driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" 
-	      url="jdbc:sqlserver://localhost:1433;databaseName=Aprovetdb"/>
+	      url="jdbc:sqlserver://localhost:1433;databaseName=SistemaAprovetdb"/>
 	-->
 	
 	<!-- Informix
-	<Resource name="jdbc/AprovetDS" auth="Container" type="javax.sql.DataSource"
+	<Resource name="jdbc/SistemaAprovetDS" auth="Container" type="javax.sql.DataSource"
 	      maxTotal="20" maxIdle="5" maxWaitMillis="10000"
 	      username="user" password="" 
 	      driverClassName="com.informix.jdbc.IfxDriver"
-	      url="jdbc:informix-sqli://localhost:1533/Aprovetdb:INFORMIXSERVER=tuservidor"/>
+	      url="jdbc:informix-sqli://localhost:1533/SistemaAprovetdb:INFORMIXSERVER=tuservidor"/>
 	-->            
 	
 	<!-- Db2
-	<Resource name="jdbc/AprovetDS" auth="Container" type="javax.sql.DataSource"
+	<Resource name="jdbc/SistemaAprovetDS" auth="Container" type="javax.sql.DataSource"
 	      maxTotal="20" maxIdle="5" maxWaitMillis="10000"
 	      username="user" password="" 
 	      driverClassName="com.ibm.db2.jcc.DB2Driver"
-	      url="jdbc:db2://localhost:50000/Aprovetdb"/>
+	      url="jdbc:db2://localhost:50000/SistemaAprovetdb"/>
 	-->
 	
 	<!-- Firebird
-	<Resource name="jdbc/AprovetDS" auth="Container" type="javax.sql.DataSource"
+	<Resource name="jdbc/SistemaAprovetDS" auth="Container" type="javax.sql.DataSource"
 	      maxTotal="20" maxIdle="5" maxWaitMillis="10000"
 	      username="user" password="" 
 	      driverClassName="org.firebirdsql.jdbc.FBDriver"
-	      url="jdbc:firebirdsql://localhost:3050/c:/db/Aprovet.fdb"/>
+	      url="jdbc:firebirdsql://localhost:3050/c:/db/SistemaAprovet.fdb"/>
 	-->
 	                  	      
 </Context>

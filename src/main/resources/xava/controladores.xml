@@ -16,11 +16,11 @@ https://github.com/openxava/openxava/blob/master/openxavatest/src/main/resources
 <controladores>
     
     <!-- Variable de entorno: 
-    <var-entorno nombre="Aprovet_ANYO_DEFECTO" valor="2015"/>
+    <var-entorno nombre="SistemaAprovet_ANYO_DEFECTO" valor="2015"/>
     -->
     
     <!-- Objeto de sesión:
-    <Objeto nombre="Aprovet_anyoActivo" clase="java.lang.Integer" valor="2015" 
+    <Objeto nombre="SistemaAprovet_anyoActivo" clase="java.lang.Integer" valor="2015" 
             ambito="global"/>
     -->
     

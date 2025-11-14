@@ -2,7 +2,7 @@
 
 <!DOCTYPE aplicacion SYSTEM "dtds/aplicacion.dtd">
 
-<aplicacion nombre="Aprovet"> 
+<aplicacion nombre="SistemaAprovet"> 
 	
 	<!--
 	Un módulo por defecto se asume para cada
