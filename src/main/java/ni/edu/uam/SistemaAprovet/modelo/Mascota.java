@@ -31,7 +31,7 @@ public class Mascota {
     @Required(message = "El genero de mascota es obligatorio")
     private Genero genero;
 
-    @Column()
+    @Required
     private LocalDate fecha_nacimiento;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
