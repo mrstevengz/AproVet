@@ -28,7 +28,7 @@ public class Movimiento_Inventario {
     @Required(message = "La cantidad es obligatoria")
     private Integer cantidad;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(  fetch= javax.persistence.FetchType.LAZY, optional = false)
     @Required(message = "Debe indicar el tipo de movimiento")
     private Tipo_Movimiento ref_tipo;
 
