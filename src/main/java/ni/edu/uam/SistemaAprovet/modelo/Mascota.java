@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.Hidden;
+import org.openxava.annotations.ReferenceView;
 import org.openxava.annotations.Required;
 
 import javax.persistence.*;
@@ -35,5 +36,6 @@ public class Mascota {
     private LocalDate fecha_nacimiento;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ReferenceView("Simple")
     private Cliente cliente;
 }
