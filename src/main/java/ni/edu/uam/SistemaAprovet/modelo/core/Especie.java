@@ -1,4 +1,4 @@
-package ni.edu.uam.SistemaAprovet.modelo;
+package ni.edu.uam.SistemaAprovet.modelo.core;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -32,8 +32,5 @@ public class Especie {
 
     @TextArea
     private String descripcion;
-
-    @Column(nullable = false)
-    private boolean activo;
 
 }

@@ -1,11 +1,9 @@
-package ni.edu.uam.SistemaAprovet.modelo;
-
+package ni.edu.uam.SistemaAprovet.modelo.inventario;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.Hidden;
-import org.openxava.annotations.Money;
 import org.openxava.annotations.Required;
 
 import javax.persistence.Column;
@@ -16,7 +14,7 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
-public class Producto {
+public class Tipo_Movimiento {
 
     @Id
     @Hidden
@@ -24,15 +22,12 @@ public class Producto {
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     private String oid;
 
-    @Column(length = 100, nullable = false)
-    @Required(message="El nombre es obligatorio")
-    private String nombre;
-
-    @Money
+    public enum Tipo {Entrada, Salida}
     @Column(nullable = false)
-    @Required(message = "El precio de venta es obligatorio")
-    private Double precio_venta;
+    @Required(message = "El tipo de movimiento es obligatorio")
+    private Tipo tipo;
 
-    @Column(length = 30)
-    private String unidad_medida;
+    @Column(length = 60, nullable = false)
+    @Required(message = "El nombre del tipo de movimiento es obligatorio")
+    private String nombre;
 }

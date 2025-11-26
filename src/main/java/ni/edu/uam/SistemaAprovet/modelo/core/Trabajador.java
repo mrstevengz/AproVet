@@ -1,4 +1,4 @@
-package ni.edu.uam.SistemaAprovet.modelo;
+package ni.edu.uam.SistemaAprovet.modelo.core;
 
 import lombok.Getter;
 import lombok.Setter;

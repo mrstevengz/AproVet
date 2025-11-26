@@ -1,4 +1,4 @@
-package ni.edu.uam.SistemaAprovet.modelo;
+package ni.edu.uam.SistemaAprovet.modelo.core;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,7 +28,7 @@ public class Mascota {
 
     public enum Genero {MACHO, HEMBRA}
 
-    @Column(length = 60, nullable = false)
+    @Column(nullable = false)
     @Required(message = "El genero de mascota es obligatorio")
     private Genero genero;
 

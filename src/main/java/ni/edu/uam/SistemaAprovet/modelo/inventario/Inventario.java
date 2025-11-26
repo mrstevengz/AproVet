@@ -1,16 +1,17 @@
-package ni.edu.uam.SistemaAprovet.modelo;
+package ni.edu.uam.SistemaAprovet.modelo.inventario;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.Hidden;
-import org.openxava.annotations.TextArea;
+import org.openxava.annotations.Required;
 
 import javax.persistence.*;
 
 @Entity
 @Getter @Setter
-public class Raza {
+public class Inventario {
+
     @Id
     @Hidden
     @GeneratedValue(generator = "system-uuid")
@@ -18,16 +19,10 @@ public class Raza {
     private String oid;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private Especie especie;
-
-    @Column(length = 60, nullable = false)
-    private String nombre;
-
-    @TextArea
-    private String descripcion;
+    private Producto producto;
 
     @Column(nullable = false)
-    private boolean activo;
-
+    @Required(message = "El stock es obligatorio")
+    private Integer stock;
 
 }

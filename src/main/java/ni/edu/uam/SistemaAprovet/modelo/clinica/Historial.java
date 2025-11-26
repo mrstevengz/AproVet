@@ -1,9 +1,9 @@
-package ni.edu.uam.SistemaAprovet.modelo;
+package ni.edu.uam.SistemaAprovet.modelo.clinica;
 
 import lombok.Getter;
 import lombok.Setter;
+import ni.edu.uam.SistemaAprovet.modelo.core.Mascota;
 import org.hibernate.annotations.GenericGenerator;
-import org.openxava.annotations.DateTime;
 import org.openxava.annotations.DefaultValueCalculator;
 import org.openxava.annotations.Hidden;
 import org.openxava.calculators.CurrentLocalDateCalculator;
