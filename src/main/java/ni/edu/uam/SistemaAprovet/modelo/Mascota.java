@@ -12,8 +12,6 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-
-
 public class Mascota {
     @Id
     @Hidden
@@ -36,4 +34,8 @@ public class Mascota {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Cliente cliente;
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "mascota_Raza")   // nombre de la columna FK en la tabla Mascota
+    private Raza raza;
 }
