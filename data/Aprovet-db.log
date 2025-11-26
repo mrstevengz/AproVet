@@ -1,14 +1,5 @@
-/*C1*/SET SCHEMA SYSTEM_LOBS
-INSERT INTO BLOCKS VALUES(0,2147483647,0)
-COMMIT
-/*C2*/SET SCHEMA PUBLIC
+/*C3*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C4*/SET SCHEMA PUBLIC
-create table Cliente (id_cliente varchar(255) not null, telefono_cliente varchar(12) not null, apellido_cliente varchar(50) not null, cedula_cliente varchar(18) not null, direccion_cliente varchar(100) not null, nombre_cliente varchar(50) not null, primary key (id_cliente))
-create table IMAGES (ID varchar(32) not null, GALLERY varchar(32), image varbinary(16777216), primary key (ID))
-create table OXDISCUSSIONCOMMENTS (id varchar(32) not null, comment clob(16777216), discussionId varchar(32), time timestamp, userName varchar(30), primary key (id))
-alter table Cliente add constraint UK_6lsuk1me7arqof4lvcj484exv unique (cedula_cliente)
-/*C3*/SET SCHEMA PUBLIC
-create index IDXbhlx4vunn24ym1tbrlgq8g30m on OXDISCUSSIONCOMMENTS (discussionId)
-/*C4*/INSERT INTO CLIENTE VALUES('ca7c56ba-d9c3-4742-b251-8a9d0f159311','76524457','Vega','001-270806-1000H','San Miguel 75 varas del sur','Guillermo')
+INSERT INTO CLIENTE VALUES('9d8d8e56-f79e-44b4-8cf0-d9f054235981','12345671','Lemus','001-270806-1000H','Masaya','Luis')
 COMMIT
