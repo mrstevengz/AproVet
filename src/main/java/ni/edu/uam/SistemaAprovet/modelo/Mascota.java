@@ -38,4 +38,7 @@ public class Mascota {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @ReferenceView("Simple")
     private Cliente cliente;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private Raza raza;
 }
