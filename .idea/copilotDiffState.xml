@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/src/main/java/ni/edu/uam/SistemaAprovet/modelo/Tipo_Movimiento.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/ni/edu/uam/SistemaAprovet/modelo/Tipo_Movimiento.java" />
+              <option name="originalContent" value="package ni.edu.uam.SistemaAprovet.modelo;&#10;&#10;import lombok.Getter;&#10;import lombok.Setter;&#10;import org.hibernate.annotations.GenericGenerator;&#10;import org.openxava.annotations.Hidden;&#10;import org.openxava.annotations.Required;&#10;&#10;import javax.persistence.Column;&#10;import javax.persistence.Entity;&#10;import javax.persistence.GeneratedValue;&#10;import javax.persistence.Id;&#10;&#10;@Entity&#10;@Getter @Setter&#10;public class Tipo_Movimiento {&#10;&#10;    @Id&#10;    @Hidden&#10;    @GeneratedValue(generator = &quot;system-uuid&quot;)&#10;    @GenericGenerator(name = &quot;system-uuid&quot;, strategy = &quot;uuid2&quot;)&#10;    private int id_TipoMovimiento;&#10;&#10;    @Column(length = 50, nullable = false)&#10;    @Required(message = &quot;El tipo es obligatorio&quot;)&#10;    private String tipo;&#10;    private String nombre;&#10;}&#10;&#10;    @Column(length = 50, nullable = false)&#10;    @Required(message = &quot;El nombre es obligatorio&quot;)&#10;    private String nombre; // Máximo 50 caracteres&#10;}" />
+              <option name="updatedContent" value="package ni.edu.uam.SistemaAprovet.modelo;&#10;&#10;import lombok.Getter;&#10;import lombok.Setter;&#10;import org.hibernate.annotations.GenericGenerator;&#10;import org.openxava.annotations.Hidden;&#10;import org.openxava.annotations.Required;&#10;&#10;import javax.persistence.Column;&#10;import javax.persistence.Entity;&#10;import javax.persistence.GeneratedValue;&#10;import javax.persistence.Id;&#10;&#10;@Entity&#10;@Getter @Setter&#10;public class Tipo_Movimiento {&#10;&#10;    @Id&#10;    @Hidden&#10;    @GeneratedValue(generator = &quot;system-uuid&quot;)&#10;    @GenericGenerator(name = &quot;system-uuid&quot;, strategy = &quot;uuid2&quot;)&#10;    private int id_TipoMovimiento;&#10;&#10;    @Column(length = 50, nullable = false)&#10;    @Required(message = &quot;El tipo es obligatorio&quot;)&#10;    private String tipo;&#10;    private String nombre;&#10;}&#10;&#10;    @Column(length = 50, nullable = false)&#10;    @Required(message = &quot;El nombre es obligatorio&quot;)&#10;    private String nombre; // Máximo 50 caracteres&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
