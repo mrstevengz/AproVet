@@ -1,0 +1,41 @@
+package modelo;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.openxava.annotations.Hidden;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Entity
+public class Cita {
+    @Id
+    @Hidden
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
+    private String id_cita;
+
+    @ManyToOne( // La referencia se almacena como una relación en la base de datos)
+            fetch= javax.persistence.FetchType.LAZY, // La referencia se carga bajo demanda
+            optional=false) // La referencia no puede estar sin valor
+    private Historial historial;
+
+    @ManyToOne( // La referencia se almacena como una relación en la base de datos
+            fetch= javax.persistence.FetchType.LAZY, // La referencia se carga bajo demanda
+            optional=false) // La referencia no puede estar sin valor
+    private Veterinario veterinario;
+
+    @ManyToOne( // La referencia se almacena como una relación en la base de datos)
+            fetch= javax.persistence.FetchType.LAZY, // La referencia se carga bajo demanda
+            optional=false) // La referencia no puede estar sin valor
+    private Servicio servicio;
+
+    @Column(name = "fecha_cita", nullable = false)
+    private Date fecha_cita;
+
+    @Column(name = "Motivo_cita", length = 200, nullable = false)
+    private String motivo;
+
+    @Column(name ="emergencia_cita", nullable = false)
+    private boolean emergencia; // true = si, false = no
+
+}
