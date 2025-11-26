@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.Hidden;
+import org.openxava.annotations.ReferenceView;
 import org.openxava.annotations.Required;
 
 import javax.persistence.*;
@@ -12,6 +13,8 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
+
+
 public class Mascota {
     @Id
     @Hidden
@@ -33,9 +36,9 @@ public class Mascota {
     private LocalDate fecha_nacimiento;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ReferenceView("Simple")
     private Cliente cliente;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "mascota_Raza")   // nombre de la columna FK en la tabla Mascota
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Raza raza;
 }

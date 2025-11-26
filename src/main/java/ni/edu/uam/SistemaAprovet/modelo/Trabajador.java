@@ -22,7 +22,7 @@ public class Trabajador {
     @Required(message="El nombre es un campo obligatorio")
     private String nombre;
 
-    @Column(length = 100)
+    @Column(length = 50)
     private String tipo_trabajador;
 
     @Column(length = 100, nullable = false)

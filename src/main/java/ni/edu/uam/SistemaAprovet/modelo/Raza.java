@@ -4,24 +4,30 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.Hidden;
+import org.openxava.annotations.TextArea;
 
 import javax.persistence.*;
 
-
-@Getter
-@Setter
 @Entity
+@Getter @Setter
 public class Raza {
-
     @Id
-    @Column(nullable = false)
+    @Hidden
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-    @Hidden
-    private String id;
+    private String oid;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "especie_Raza")
-    Especie especie;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private Especie especie;
+
+    @Column(length = 60, nullable = false)
+    private String nombre;
+
+    @TextArea
+    private String descripcion;
+
+    @Column(nullable = false)
+    private boolean activo;
+
 
 }

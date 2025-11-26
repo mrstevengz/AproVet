@@ -24,12 +24,12 @@ https://github.com/openxava/openxava/blob/master/openxavatest/src/main/resources
             ambito="global"/>
     -->
     
-    <!-- Controlador:
-    <controlador nombre="Profesor">
+    <!-- Controlador: Cliente  -->
+    <controlador nombre="Cliente">
         <hereda-de controlador="Typical"/>
-        <accion nombre="new" icono="plus-box-multiple" atajo-de-teclado="Control N" 
-                clase="acciones.CrearProfesor"/>        
+        <accion nombre="printCustomReport" icono="printer" modo="list"
+                clase="ni.edu.uam.SistemaAprovet.actions.PrintMyCustomReportAction"/>
     </controlador>
-    -->
-    
+
+
 </controladores>
