@@ -28,7 +28,7 @@ public class Compra {
 
     @ElementCollection
     @ListProperties("producto.nombre, producto.precio_venta, cantidad")
-    private Collection<Detalle> detalles;
+    private Collection<DetalleCompra> detalles;
 
     @Money
     @Column(nullable = false)
