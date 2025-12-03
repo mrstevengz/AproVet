@@ -25,10 +25,11 @@ https://github.com/openxava/openxava/blob/master/openxavatest/src/main/resources
     -->
     
     <!-- Controlador: Cliente  -->
-    <controlador nombre="Cliente">
+    <controlador nombre="TypicalConReporte">
         <hereda-de controlador="Typical"/>
-        <accion nombre="printCustomReport" icono="printer" modo="list"
-                clase="ni.edu.uam.SistemaAprovet.actions.PrintMyCustomReportAction"/>
+
+        <accion nombre="printMascota" icono="printer" modo="list"
+                clase="ni.edu.uam.SistemaAprovet.actions.PrintMascotasReportAction"/>
     </controlador>
 
 

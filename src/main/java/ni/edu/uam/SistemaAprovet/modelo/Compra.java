@@ -1,4 +1,4 @@
-package ni.edu.uam.SistemaAprovet.modelo;
+package ni.edu.uam.SistemaAprovet.modelo.facturacion;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,6 @@ import org.openxava.calculators.CurrentLocalDateCalculator;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 
 @Entity
 @Getter
@@ -26,10 +25,6 @@ public class Compra {
 
     @DefaultValueCalculator(CurrentLocalDateCalculator.class)
     private LocalDate fecha_compra;
-
-    @ElementCollection
-    @ListProperties("producto.nombre, producto.precio_venta, cantidad")
-    private Collection<Detalle> detalles;
 
     @Money
     @Column(nullable = false)
