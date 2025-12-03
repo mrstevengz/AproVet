@@ -20,20 +20,20 @@ public class Mascota {
     @Hidden
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-    private String oid;
+    private String oid_mascota;
 
     @Column(length = 60, nullable = false)
     @Required(message = "El nombre de la mascota es obligatorio")
-    private String nombre;
+    private String nombre_mascota;
 
     public enum Genero {MACHO, HEMBRA}
 
     @Column(nullable = false)
     @Required(message = "El genero de mascota es obligatorio")
-    private Genero genero;
+    private Genero genero_mascota;
 
     @Required
-    private LocalDate fecha_nacimiento;
+    private LocalDate fecha_nacimiento_mascota;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @ReferenceView("Simple")

@@ -24,35 +24,13 @@ https://github.com/openxava/openxava/blob/master/openxavatest/src/main/resources
             ambito="global"/>
     -->
     
-    <!-- Controlador: Cliente  -->
-    <controlador nombre="Cliente">
-        <hereda-de controlador="Typical"/>
-        <accion nombre="printCustomReport" icono="printer" modo="list"
-                clase="ni.edu.uam.SistemaAprovet.actions.PrintMyCustomReportAction"/>
-    </controlador>
-
-    <controlador nombre="DetalleCompra">
-        <!-- Hereda todas las acciones típicas (New, Save, Delete, etc.) -->
+    <!-- Controlador: Mascota  -->
+    <controlador nombre="TypicalConReporte">
         <hereda-de controlador="Typical"/>
 
-        <!-- Sobrescribimos la acción save para usar nuestra clase -->
+        <accion nombre="imprimirMascota" icono="printer" modo="list"
+                clase="ni.edu.uam.SistemaAprovet.actions.report.PrintMascotasReportAction"/>
     </controlador>
 
 
-    <controlador nombre="Facturas">
-        <hereda-de controlador="TypicalNewEdition"/>
-        <accion nombre="guardar" icono="printer" modo="detail"
-                clase="ni.edu.uam.SistemaAprovet.actions.guardarFactura"/>
-    </controlador>
-    <controlador nombre="InventarioSoloEdicion">
-        <hereda-de controlador="Typical"/>
-    </controlador>
-
-    <controlador nombre="Cliente">
-        <hereda-de controlador="Typical"/>
-        <accion nombre="printCustomReport" icono="printer" modo="list"
-                clase="ni.edu.uam.SistemaAprovet.actions.PrintMyCustomReportAction"/>
-        <accion nombre="printMascota" icono="printer" modo="list"
-                clase="ni.edu.uam.SistemaAprovet.actions.PrintMascotasReportAction"/>
-    </controlador>
 </controladores>

@@ -12,10 +12,10 @@ public class InventarioServicio {
     /**
      * Devuelve el inventario para el producto.
      * Si no existe, lo crea con valores por defecto.
-     *
-     * Solo se toca STOCK automáticamente desde las compras.
+
+     * Solo se toca STOCK automaticamente desde las compras.
      * stockMinimo y stockMaximo se dejan para que el usuario
-     * los edite manualmente en el módulo de Inventario.
+     * los edite manualmente en el modulo de Inventario.
      */
     public static Inventario obtenerOCrearInventario(Producto producto) {
         EntityManager em = XPersistence.getManager();
@@ -34,8 +34,8 @@ public class InventarioServicio {
             // stock inicia en 0
             inv.setStock(0);
 
-            // Valores por defecto válidos (? 0 para que no fallen validaciones)
-            inv.setStockMinimo(1);   // luego tú lo cambias en Inventario
+            // Valores por defecto validos (? 0 para que no fallen validaciones)
+            inv.setStockMinimo(1);   // luego lo cambias en Inventario
             inv.setStockMaximo(1);   // idem
 
             em.persist(inv);

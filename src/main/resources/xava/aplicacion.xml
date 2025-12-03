@@ -9,7 +9,7 @@
 	controlador en <modulo-defecto/> 
 	-->
 	<modulo-defecto>		  
-		<controlador nombre="Typical"/>		
+		<controlador nombre="TypicalConReporte"/>
 	</modulo-defecto>
 	
 	<!--
@@ -18,18 +18,7 @@
 		<modelo nombre="Profesor"/>
 		<controlador nombre="Print"/>
 	</modulo>		
-	-->
-
-
-
-    <modulo nombre="DetalleCompra">
-        <modelo nombre="DetalleCompra"/>
-        <controlador nombre="DetalleCompra"/>
-    </modulo>
-
-    <modulo nombre="Cliente">
-        <modelo nombre="Cliente"/>
-        <controlador nombre="Cliente"/>
-    </modulo>
+	-->	  
+		
 </aplicacion>
 
