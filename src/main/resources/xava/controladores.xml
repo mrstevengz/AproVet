@@ -29,7 +29,7 @@ https://github.com/openxava/openxava/blob/master/openxavatest/src/main/resources
         <hereda-de controlador="Typical"/>
 
         <accion nombre="imprimirMascota" icono="printer" modo="list"
-                clase="ni.edu.uam.SistemaAprovet.actions.PrintMascotasReportAction"/>
+                clase="ni.edu.uam.SistemaAprovet.actions.report.PrintMascotasReportAction"/>
     </controlador>
 
 
