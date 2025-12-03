@@ -24,11 +24,11 @@ https://github.com/openxava/openxava/blob/master/openxavatest/src/main/resources
             ambito="global"/>
     -->
     
-    <!-- Controlador: Cliente  -->
+    <!-- Controlador: Mascota  -->
     <controlador nombre="TypicalConReporte">
         <hereda-de controlador="Typical"/>
 
-        <accion nombre="printMascota" icono="printer" modo="list"
+        <accion nombre="imprimirMascota" icono="printer" modo="list"
                 clase="ni.edu.uam.SistemaAprovet.actions.PrintMascotasReportAction"/>
     </controlador>
 
