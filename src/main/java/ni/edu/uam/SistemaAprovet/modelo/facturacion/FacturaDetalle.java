@@ -1,62 +1,71 @@
 package ni.edu.uam.SistemaAprovet.modelo.facturacion;
 
+import ni.edu.uam.SistemaAprovet.modelo.inventario.Inventario;
 import ni.edu.uam.SistemaAprovet.modelo.inventario.Producto;
 import lombok.Getter;
 import lombok.Setter;
 
-import org.openxava.annotations.DescriptionsList;
-import org.openxava.annotations.Required;
+import org.hibernate.annotations.GenericGenerator;
+import org.openxava.annotations.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+
 
 @Entity
 @Getter @Setter
 public class FacturaDetalle {
 
-    // ----- PK: id_Detalle (int) -----
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_detalle")
-    private Integer idDetalle;
+    @Hidden
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
+    private String oid;
 
-    // ----- FK -> Factura (id_factura : int) -----
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id_factura", nullable = false)
-    @DescriptionsList(descriptionProperties = "id_factura")
-    @NotNull(message = "Debe seleccionar una factura")
     private Factura factura;
 
-    // ----- FK -> Servicio (id_servicio : int) -----
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "id_servicio", nullable = false)
-    @DescriptionsList(descriptionProperties = "nombre")
-    @NotNull(message = "Debe seleccionar un servicio")
-    private Servicio servicio;
+    @ManyToOne
+    private Producto producto;   // solo se llena si es producto
 
-    // ----- FK -> Producto (id_producto : int) -----
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "oid", nullable = false)
-    @DescriptionsList(descriptionProperties = "nombre")
-    @NotNull(message = "Debe seleccionar un producto")
-    private Producto producto;
+    @ManyToOne
+    private Servicio servicio;   // solo se llena si es servicio
 
-    // ----- cantidad : int  (CHECK CantidadMinima) -----
-    @Column(name = "cantidad", nullable = true)
-    @NotNull(message = "La cantidad es obligatoria")
-    @Min(value = 1, message = "La cantidad mínima es 1")
+    @Column(nullable = false)
     @Required
     private Integer cantidad;
 
-    // ----- precio_unitario : float (CHECK PrecioUnitarioMinimo) -----
-    @Column(name = "precio_unitario", nullable = false)
-    @NotNull(message = "El precio unitario es obligatorio")
-    @DecimalMin(value = "0.01", message = "El precio unitario mínimo es 0.01")
+    @Money
+    @Column(nullable = false)
     @Required
-    private Float precioUnitario;
+    private float precioUnitario;
 
-    // ----- subtotal : float (CHECK SubtotalMinimo) -----
+    @Money
+    @ReadOnly
+    @Depends("cantidad, precioUnitario")
+    public float getSubtotal() {
+        if (cantidad == null || precioUnitario == 0) return 0;
+        return precioUnitario * cantidad;
+    }
 
+    // ===== INVENTARIO: solo si hay PRODUCTO (no servicio) =====
+
+    @PrePersist
+    private void disminuirStockAlVender() {
+        if (producto == null || cantidad == null) return;   // es servicio -> no toca inventario
+
+        Inventario inv = producto.getInventario();
+        if (inv == null) return;  // por si acaso
+
+        inv.setStock(inv.getStock() - cantidad);  // VENTA => baja stock
+    }
+
+    @PreRemove
+    private void devolverStockSiBorro() {
+        if (producto == null || cantidad == null) return;
+
+        Inventario inv = producto.getInventario();
+        if (inv == null) return;
+
+        inv.setStock(inv.getStock() + cantidad);  // deshago la venta
+    }
 }

@@ -19,31 +19,30 @@ import ni.edu.uam.SistemaAprovet.modelo.core.Cliente;
 @Getter @Setter
 public class Factura {
 
-    // ----- PK -----
     @Id
     @Hidden
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     private String id_factura;
 
-    // ----- FK -> Cliente -----
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_cliente")
-    @DescriptionsList(descriptionProperties = "nombre,apellido") // muestra nombre y apellido
+    @DescriptionsList(descriptionProperties = "nombre,apellido")
     @NotNull(message = "Debe seleccionar un cliente para la factura")
     private Cliente cliente;
 
-    // ----- Fecha de registro -----
     @Column(name = "fecha_registro", nullable = false)
     @Temporal(TemporalType.DATE)
     @NotNull(message = "La fecha de registro es obligatoria")
     @Required
     private Date fecha_registro;
 
-    // ----- Monto -----
     @Column(name = "monto", nullable = false, precision = 12, scale = 2)
     @NotNull(message = "El monto de la factura es obligatorio")
     @DecimalMin(value = "0.01", message = "El monto debe ser mayor que 0")
     @Required
-    private BigDecimal monto;
+    private float monto;
+
+    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL)
+    private java.util.Collection<FacturaDetalle> detalles;
 }

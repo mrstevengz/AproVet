@@ -33,15 +33,10 @@ public class Categoria {
     @Size(max = 50, message = "El nombre de la categoría no puede superar 50 caracteres")
     private String nombre;
 
-    @Column(name = "afecta_inventario", nullable = false)
-    @NotNull(message = "Debe indicar si la categoría afecta inventario")
-    private Boolean afectaInventario;
 
     @Column(name = "descripcion_categoria", length = 50)
     @Size(max = 50, message = "La descripción de la categoría no puede superar 50 caracteres")
     private String descripcion;
 
-    @Column(name = "activo", nullable = false)
-    @NotNull(message = "Debe indicar si la categoría está activa")
-    private Boolean activo = true;
+
 }

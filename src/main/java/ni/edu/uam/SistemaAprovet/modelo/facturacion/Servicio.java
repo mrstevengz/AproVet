@@ -34,16 +34,6 @@ public class Servicio {
     @Size(max = 50, message = "La descripción del servicio no puede superar 50 caracteres")
     private String descripcion;
 
-    @Column(name = "precio_base", nullable = false, precision = 12, scale = 2)
-    @Required
-    @NotNull(message = "El precio base del servicio es obligatorio")
-    @DecimalMin(value = "0.01", inclusive = true,
-            message = "El precio base debe ser mayor que 0")
-    @Digits(integer = 10, fraction = 2,
-            message = "El precio base debe tener como máximo 10 dígitos enteros y 2 decimales")
-    private BigDecimal precioBase;
 
-    @Column(name = "activo", nullable = false)
-    @NotNull(message = "Debe indicar si el servicio está activo")
-    private Boolean activo = true;
+
 }
