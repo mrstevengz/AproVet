@@ -1,15 +1,16 @@
 package ni.edu.uam.SistemaAprovet.modelo.facturacion;
 
-import ni.edu.uam.SistemaAprovet.modelo.inventario.Inventario;
-import ni.edu.uam.SistemaAprovet.modelo.inventario.Producto;
 import lombok.Getter;
 import lombok.Setter;
-
+import ni.edu.uam.SistemaAprovet.actions.CambiarServicio;
+import ni.edu.uam.SistemaAprovet.modelo.inventario.Inventario;
+import ni.edu.uam.SistemaAprovet.modelo.inventario.Producto;
 import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.*;
+import org.openxava.jpa.XPersistence;
 
 import javax.persistence.*;
-
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -21,14 +22,21 @@ public class FacturaDetalle {
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     private String oid;
 
+    // ===== RELACIÓN CON FACTURA (MAESTRO) =====
     @ManyToOne(optional = false)
+    @JoinColumn(name = "id_factura")
     private Factura factura;
 
-    @ManyToOne
-    private Producto producto;   // solo se llena si es producto
+    // ===== CAMPOS DE NEGOCIO =====
+
+    @OnChange(CambiarServicio.class)
+    private Boolean esServicio;  // true = servicio, false/null = producto
 
     @ManyToOne
-    private Servicio servicio;   // solo se llena si es servicio
+    private Producto producto;   // si es producto se descuenta stock
+
+    @ManyToOne
+    private Servicio servicio;   // si es servicio NO toca inventario (ajusta el paquete)
 
     @Column(nullable = false)
     @Required
@@ -39,6 +47,7 @@ public class FacturaDetalle {
     @Required
     private float precioUnitario;
 
+    // ===== SUBTOTAL CALCULADO =====
     @Money
     @ReadOnly
     @Depends("cantidad, precioUnitario")
@@ -47,25 +56,49 @@ public class FacturaDetalle {
         return precioUnitario * cantidad;
     }
 
-    // ===== INVENTARIO: solo si hay PRODUCTO (no servicio) =====
+    // =================================================
+    //   CALLBACKS: INVENTARIO SOLO PARA PRODUCTO
+    // =================================================
 
     @PrePersist
     private void disminuirStockAlVender() {
-        if (producto == null || cantidad == null) return;   // es servicio -> no toca inventario
+        if (Boolean.TRUE.equals(esServicio)) return;      // es servicio -> no toca inventario
+        if (producto == null || cantidad == null) return;
 
-        Inventario inv = producto.getInventario();
-        if (inv == null) return;  // por si acaso
+        EntityManager em = XPersistence.getManager();
 
-        inv.setStock(inv.getStock() - cantidad);  // VENTA => baja stock
+        List<Inventario> lista = em.createQuery(
+                        "from Inventario i where i.producto = :prod",
+                        Inventario.class)
+                .setParameter("prod", producto)
+                .getResultList();
+
+        if (lista.isEmpty()) return;
+
+        Inventario inv = lista.get(0);
+        Integer actual = inv.getStock();
+        int stockActual = (actual == null) ? 0 : actual;
+        inv.setStock(stockActual - cantidad);   // venta => baja stock
     }
 
     @PreRemove
     private void devolverStockSiBorro() {
+        if (Boolean.TRUE.equals(esServicio)) return;
         if (producto == null || cantidad == null) return;
 
-        Inventario inv = producto.getInventario();
-        if (inv == null) return;
+        EntityManager em = XPersistence.getManager();
 
-        inv.setStock(inv.getStock() + cantidad);  // deshago la venta
+        List<Inventario> lista = em.createQuery(
+                        "from Inventario i where i.producto = :prod",
+                        Inventario.class)
+                .setParameter("prod", producto)
+                .getResultList();
+
+        if (lista.isEmpty()) return;
+
+        Inventario inv = lista.get(0);
+        Integer actual = inv.getStock();
+        int stockActual = (actual == null) ? 0 : actual;
+        inv.setStock(stockActual + cantidad);   // deshago la venta
     }
 }

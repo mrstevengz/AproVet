@@ -21,7 +21,10 @@
 	-->
 
 
-
+<modulo nombre="FacturaDetalle">
+        <modelo nombre="FacturaDetalle"/>
+        <controlador nombre="FacturaDetalle"/>
+</modulo>
     <modulo nombre="DetalleCompra">
         <modelo nombre="DetalleCompra"/>
         <controlador nombre="DetalleCompra"/>

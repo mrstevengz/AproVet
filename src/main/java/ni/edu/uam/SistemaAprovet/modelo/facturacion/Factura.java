@@ -1,19 +1,14 @@
 package ni.edu.uam.SistemaAprovet.modelo.facturacion;
 
-
 import lombok.Getter;
 import lombok.Setter;
+import ni.edu.uam.SistemaAprovet.modelo.core.Cliente; // <-- ajusta el paquete si es distinto
 import org.hibernate.annotations.GenericGenerator;
-import org.openxava.annotations.DescriptionsList;
-import org.openxava.annotations.Hidden;
-import org.openxava.annotations.Required;
+import org.openxava.annotations.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
-import java.util.Date;
-import ni.edu.uam.SistemaAprovet.modelo.core.Cliente;
+import java.time.LocalDate;
+import java.util.Collection;
 
 @Entity
 @Getter @Setter
@@ -23,26 +18,38 @@ public class Factura {
     @Hidden
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-    private String id_factura;
+    private String oid;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id_cliente")
-    @DescriptionsList(descriptionProperties = "nombre,apellido")
-    @NotNull(message = "Debe seleccionar un cliente para la factura")
+    @Required
     private Cliente cliente;
 
-    @Column(name = "fecha_registro", nullable = false)
-    @Temporal(TemporalType.DATE)
-    @NotNull(message = "La fecha de registro es obligatoria")
     @Required
-    private Date fecha_registro;
+    private LocalDate fechaRegistro;
 
-    @Column(name = "monto", nullable = false, precision = 12, scale = 2)
-    @NotNull(message = "El monto de la factura es obligatorio")
-    @DecimalMin(value = "0.01", message = "El monto debe ser mayor que 0")
-    @Required
+    @Money
+    @ReadOnly
     private float monto;
 
-    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL)
-    private java.util.Collection<FacturaDetalle> detalles;
+    // ===== COLECCIÓN DE DETALLE =====
+    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ListProperties("esServicio, producto.nombre, servicio.nombre, cantidad, precioUnitario, subtotal")
+    private Collection<FacturaDetalle> detalleFactura;
+
+    // =========================================
+    //  RECALCULAR TOTAL ANTES DE GUARDAR
+    // =========================================
+    @PrePersist
+    @PreUpdate
+    private void recalcularTotal() {
+        float total = 0f;
+        if (detalleFactura != null) {
+            for (FacturaDetalle d : detalleFactura) {
+                if (d != null && d.getCantidad() != null) {
+                    total += d.getSubtotal();
+                }
+            }
+        }
+        this.monto = total;
+    }
 }
