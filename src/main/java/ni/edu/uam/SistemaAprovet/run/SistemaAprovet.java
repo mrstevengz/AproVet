@@ -5,8 +5,7 @@ import org.openxava.util.*;
 import java.util.Locale;
 
 /**
- * Ejecuta esta clase para arrancar la aplicación.
- *
+ * Ejecuta esta clase para arrancar la aplicación.*
  * Con OpenXava Studio/Eclipse: Botón derecho del ratón > Run As > Java Application
  */
 

@@ -25,6 +25,12 @@ public class Trabajador {
     @Column(length = 50)
     private String tipo_trabajador;
 
+    @Column(length = 20, nullable = false, unique = true)
+    private String cedula;
+
+    @Column(length = 15, nullable = false)
+    private String telefono;
+
     @Column(length = 100, nullable = false)
     @Required(message="La contraseña es un campo obligatorio")
     private String contraseña;

@@ -22,23 +22,23 @@ public class Cliente {
     @Hidden
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-    private String oid;
+    private String oid_cliente;
 
     @Column(length = 60, nullable = false)
     @Required(message = "El nombre de cliente es obligatorio")
-    private String nombre;
+    private String nombre_cliente;
 
     @Column(length = 60, nullable = false)
     @Required(message = "El apellido de cliente es obligatorio")
-    private String apellido;
+    private String apellido_cliente;
 
     @Column(length = 16, nullable = false, unique = true)
     @Required(message = "La cédula es obligatoria")
-    private String cedula;
+    private String cedula_cliente;
 
     @Column(length = 15)
-    private String telefono;
+    private String telefono_cliente;
 
     @Column(length = 100)
-    private String direccion;
+    private String direccion_cliente;
 }

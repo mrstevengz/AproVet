@@ -2,13 +2,13 @@
 <!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD Report Design//EN"
         "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 
-<jasperReport name="ReporteMascota" pageWidth="595" pageHeight="842" columnWidth="555"
+<jasperReport name="ReporteTrabajador" pageWidth="595" pageHeight="842" columnWidth="555"
               leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 
-    <field name="nombre_mascota" class="java.lang.String"/>
-    <field name="fecha_nacimiento_mascota" class="java.time.LocalDate"/>
-    <field name="genero_mascota" class="java.lang.Enum"/>
-    <field name="raza" class="ni.edu.uam.SistemaAprovet.modelo.core.Raza"/>
+    <field name="nombre" class="java.lang.String"/>
+    <field name="tipo_trabajador" class="java.lang.String"/>
+    <field name="cedula" class="java.lang.String"/>
+    <field name="telefono" class="java.lang.String"/>
 
     <title>
         <band height="60">
@@ -24,7 +24,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font size="22" isBold="true"/>
                 </textElement>
-                <text><![CDATA[REPORTE DE MASCOTAS]]></text>
+                <text><![CDATA[REPORTE DE TRABAJADORES]]></text>
             </staticText>
 
             <textField pattern="dd/MM/yyyy HH:mm">
@@ -51,35 +51,35 @@
             </rectangle>
 
             <staticText>
-                <reportElement x="10" y="0" width="160" height="30"/>
+                <reportElement x="10" y="0" width="200" height="30"/>
                 <textElement verticalAlignment="Middle">
                     <font size="12" isBold="true"/>
                 </textElement>
-                <text><![CDATA[NOMBRE]]></text>
+                <text><![CDATA[NOMBRE COMPLETO]]></text>
             </staticText>
 
             <staticText>
-                <reportElement x="170" y="0" width="160" height="30"/>
+                <reportElement x="210" y="0" width="135" height="30"/>
                 <textElement verticalAlignment="Middle">
                     <font size="12" isBold="true"/>
                 </textElement>
-                <text><![CDATA[RAZA]]></text>
+                <text><![CDATA[TIPO TRABAJADOR]]></text>
             </staticText>
 
             <staticText>
-                <reportElement x="330" y="0" width="100" height="30"/>
+                <reportElement x="345" y="0" width="110" height="30"/>
                 <textElement verticalAlignment="Middle">
                     <font size="12" isBold="true"/>
                 </textElement>
-                <text><![CDATA[GÉNERO]]></text>
+                <text><![CDATA[CÉDULA]]></text>
             </staticText>
 
             <staticText>
-                <reportElement x="430" y="0" width="115" height="30"/>
+                <reportElement x="455" y="0" width="100" height="30"/>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font size="12" isBold="true"/>
                 </textElement>
-                <text><![CDATA[NACIMIENTO]]></text>
+                <text><![CDATA[TELÉFONO]]></text>
             </staticText>
         </band>
     </columnHeader>
@@ -91,37 +91,36 @@
             </line>
 
             <textField isStretchWithOverflow="true">
-                <reportElement x="10" y="2" width="160" height="20"/>
+                <reportElement x="10" y="2" width="200" height="20"/>
                 <textElement verticalAlignment="Middle">
                     <font size="11"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{nombre_mascota} == null ? "-" : $F{nombre_mascota}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{nombre} == null ? "-" : $F{nombre}]]></textFieldExpression>
             </textField>
 
             <textField isStretchWithOverflow="true">
-                <reportElement x="170" y="2" width="160" height="20"/>
+                <reportElement x="210" y="2" width="135" height="20"/>
                 <textElement verticalAlignment="Middle">
                     <font size="11"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{raza} == null ? "Desconocida" : $F{raza}.getNombre()]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{tipo_trabajador} == null ? "-" : $F{tipo_trabajador}]]></textFieldExpression>
             </textField>
 
             <textField isStretchWithOverflow="true">
-                <reportElement x="330" y="2" width="100" height="20"/>
+                <reportElement x="345" y="2" width="110" height="20"/>
                 <textElement verticalAlignment="Middle">
                     <font size="11"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{genero_mascota} == null ? "-" : $F{genero_mascota}.toString()]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{cedula} == null ? "-" : $F{cedula}]]></textFieldExpression>
             </textField>
 
             <textField isStretchWithOverflow="true">
-                <reportElement x="430" y="2" width="115" height="20"/>
+                <reportElement x="455" y="2" width="90" height="20"/>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font size="11"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{fecha_nacimiento_mascota} == null ? "-" : new java.text.SimpleDateFormat("dd/MM/yyyy").format(java.sql.Date.valueOf($F{fecha_nacimiento_mascota}))]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{telefono} == null ? "-" : $F{telefono}]]></textFieldExpression>
             </textField>
-
         </band>
     </detail>
 

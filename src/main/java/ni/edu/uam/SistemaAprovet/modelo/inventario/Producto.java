@@ -2,7 +2,6 @@ package ni.edu.uam.SistemaAprovet.modelo.inventario;
 
 import lombok.Getter;
 import lombok.Setter;
-import ni.edu.uam.SistemaAprovet.modelo.facturacion.Categoria;
 import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.Hidden;
 import org.openxava.annotations.Required;
