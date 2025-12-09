@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD Report Design//EN"
+        "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+
+<jasperReport name="ReporteServicio" pageWidth="595" pageHeight="842" columnWidth="555"
+              leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+
+    <field name="nombre" class="java.lang.String"/>
+    <field name="precio" class="java.math.BigDecimal"/>
+    <field name="descripcion" class="java.lang.String"/>
+
+    <title>
+        <band height="60">
+            <rectangle>
+                <reportElement x="0" y="0" width="555" height="50" backcolor="#F0F0F0"/>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+
+            <staticText>
+                <reportElement x="10" y="10" width="340" height="30"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font size="22" isBold="true"/>
+                </textElement>
+                <text><![CDATA[LISTADO DE SERVICIOS]]></text>
+            </staticText>
+
+            <textField pattern="dd/MM/yyyy HH:mm">
+                <reportElement x="350" y="15" width="195" height="20" forecolor="#555555"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA["Generado: " + new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(new java.util.Date())]]></textFieldExpression>
+            </textField>
+
+            <line>
+                <reportElement x="0" y="55" width="555" height="1"/>
+            </line>
+        </band>
+    </title>
+
+    <columnHeader>
+        <band height="30">
+            <rectangle>
+                <reportElement x="0" y="0" width="555" height="30" backcolor="#E6E6E6"/>
+                <graphicElement>
+                    <pen lineWidth="0.0"/>
+                </graphicElement>
+            </rectangle>
+
+            <staticText>
+                <reportElement x="5" y="0" width="150" height="30"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="12" isBold="true"/>
+                </textElement>
+                <text><![CDATA[SERVICIO]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="160" y="0" width="300" height="30"/>
+                <textElement verticalAlignment="Middle">
+                    <font size="12" isBold="true"/>
+                </textElement>
+                <text><![CDATA[DESCRIPCIÓN]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="470" y="0" width="80" height="30"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="12" isBold="true"/>
+                </textElement>
+                <text><![CDATA[PRECIO]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <detail>
+        <band height="25">
+            <line>
+                <reportElement x="0" y="24" width="555" height="1" forecolor="#CCCCCC"/>
+            </line>
+
+            <textField isStretchWithOverflow="true">
+                <reportElement x="5" y="2" width="150" height="20"/>
+                <textElement verticalAlignment="Top">
+                    <font size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{nombre} == null ? "-" : $F{nombre}]]></textFieldExpression>
+            </textField>
+
+            <textField isStretchWithOverflow="true">
+                <reportElement x="160" y="2" width="300" height="20"/>
+                <textElement verticalAlignment="Top" textAlignment="Justified">
+                    <font size="10"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{descripcion} == null ? "-" : $F{descripcion}]]></textFieldExpression>
+            </textField>
+
+            <textField isStretchWithOverflow="true">
+                <reportElement x="470" y="2" width="80" height="20"/>
+                <textElement textAlignment="Right" verticalAlignment="Top">
+                    <font size="10"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{precio} == null ? "-" : new java.text.DecimalFormat("C$ #,##0.00").format($F{precio})]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+
+    <pageFooter>
+        <band height="20">
+            <textField>
+                <reportElement x="435" y="0" width="80" height="20"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression class="java.lang.String"><![CDATA["Pág. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+            </textField>
+            <textField evaluationTime="Report">
+                <reportElement x="515" y="0" width="40" height="20"/>
+                <textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+
+</jasperReport>

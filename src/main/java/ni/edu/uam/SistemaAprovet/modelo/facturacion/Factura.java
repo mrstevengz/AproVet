@@ -36,7 +36,7 @@ public class Factura {
     // ===== COLECCIÓN DE DETALLE =====
     @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL, orphanRemoval = true)
     @ListProperties("esServicio, producto.nombre, servicio.nombre, cantidad, precioUnitario, subtotal")
-    private Collection<FacturaDetalle> detalleFactura;
+    private Collection<DetalleFactura> detalleFactura;
 
     // =========================================
     //  MONTO CALCULADO (NO SE GUARDA EN BD)
@@ -48,7 +48,7 @@ public class Factura {
         float total = 0;
 
         if (detalleFactura != null) {
-            for (FacturaDetalle d : detalleFactura) {
+            for (DetalleFactura d : detalleFactura) {
                 if (d != null && d.getSubtotal() != 0) {
                     total = total + d.getSubtotal();
                 }
