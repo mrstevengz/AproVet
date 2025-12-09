@@ -2,109 +2,74 @@ package ni.edu.uam.SistemaAprovet.modelo.facturacion;
 
 import lombok.Getter;
 import lombok.Setter;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.*;
-import org.openxava.calculators.CurrentLocalDateCalculator;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter @Setter
-@View(members =
-        "Datos Generales {" +
-                "procesada;" +             // Ver el estado (checkbox de solo lectura)
-                "fechaCompra, proveedor;" +
-                "descripcion;" +
-                "}" +
-                "Detalles {" +
-                "detalleCompra;" +
-                "}" +
-                "Totales {" +
-                "total;" +
-                "}"
-)
 public class Compra {
 
+    // =====================
+    //  IDENTIFICADOR
+    // =====================
     @Id
     @Hidden
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     private String oid;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @DescriptionsList(descriptionProperties = "nombre")
+    // =====================
+    //  DATOS BÁSICOS
+    // =====================
+
+    @ManyToOne(optional = false)
+    @DescriptionsList   // para elegir el proveedor en combo
     private Proveedor proveedor;
 
     @Required
     @Stereotype("DATE")
-    @DefaultValueCalculator(CurrentLocalDateCalculator.class)
-    private LocalDate fechaCompra;
+    private LocalDate fechaCompra = LocalDate.now();
 
-    @Stereotype("MEMO")
+    @Stereotype("TEXT_AREA")
     private String descripcion;
 
-    // ==========================================
-    //  CONTROL DE INVENTARIO
-    // ==========================================
+    // Total de la compra (se recalcula desde los detalles)
+    @Stereotype("MONEY")
+    @Column(nullable = false)
+    private Float total = 0f;      // ?? valor por defecto para permitir crear sin detalles
 
-    @Column(columnDefinition = "boolean default false")
-    @ReadOnly
-    private boolean procesada = false;
+    // =====================
+    //  DETALLES DE COMPRA
+    // =====================
 
-    @ElementCollection
+    @OneToMany(mappedBy = "compra",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     @ListProperties("producto.nombre, cantidad, precioUnitario, subtotal")
     private List<DetalleCompra> detalleCompra = new ArrayList<>();
 
-    @ReadOnly
-    @Stereotype("MONEY")
-    private float total = 0;
-
     // =====================
-    //  LÃ“GICA SEGURA
+    //  MÉTODOS DE APOYO
     // =====================
 
-    @PrePersist
-    @PreUpdate
-    private void ejecutarLogica() {
-        recalcularTotal();
-        actualizarStockSeguro();
-    }
-
-    private void recalcularTotal() {
-        float t = 0;
-        for (DetalleCompra d : detalleCompra) {
-            t = t + d.getSubtotal();
-        }
-        this.total = t;
-    }
-
-    private void actualizarStockSeguro() {
-        if (this.procesada) {
-            return;
-        }
-        boolean huboActualizacion = false;
-
-        for (DetalleCompra d : detalleCompra) {
-            if (d.getProducto() != null
-                    && d.getProducto().getInventario() != null
-                    && d.getCantidad() != null
-                    && d.getCantidad() > 0) {
-
-                var inventario = d.getProducto().getInventario();
-
-                int stockActual = (inventario.getStock() == null) ? 0 : inventario.getStock();
-
-                inventario.setStock(stockActual + d.getCantidad());
-
-                huboActualizacion = true;
+    /**
+     * Recalcula el total sumando los subtotales de todos los detalles.
+     * (La estás usando indirectamente desde DetalleCompra.beforeSave()).
+     */
+    public void recalcularTotalDesdeDetalles() {
+        float t = 0f;
+        if (detalleCompra != null) {
+            for (DetalleCompra d : detalleCompra) {
+                Float sub = d.getSubtotal();
+                if (sub != null) t += sub;
             }
         }
-        if (huboActualizacion) {
-            this.procesada = true;
-        }
+        this.total = t;
     }
 }
