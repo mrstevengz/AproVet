@@ -3,15 +3,31 @@ package ni.edu.uam.SistemaAprovet.modelo.inventario;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.openxava.annotations.Hidden;
-import org.openxava.annotations.Required;
-import org.openxava.annotations.View;
+import org.openxava.annotations.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Getter @Setter
-@View(name="Simple", members="nombre; categoria; unidad_medida") // vista sin inventario
+
+@View(members =
+        "Datos Generales {" +
+                "codigo, categoria;" +
+                "nombre;" +
+                "precioVenta;" +
+                "}" +
+                "Descripcion {" +
+                "descripcion;" +
+                "}" +
+                "Inventario {" +
+                "inventario;" +
+                "}"
+)
+
+
+@View(name = "Simple", members = "codigo, nombre, precioVenta")
+
 public class Producto {
 
     @Id
@@ -20,30 +36,28 @@ public class Producto {
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     private String oid;
 
+    @Column(length = 20, unique = true, nullable = false)
+    @Required(message = "El código es obligatorio")
+    private String codigo;
+
     @Column(length = 100, nullable = false)
-    @Required(message="El nombre es obligatorio")
+    @Required(message = "El nombre del producto es obligatorio")
+    @SearchKey
     private String nombre;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @DescriptionsList(descriptionProperties = "nombre")
+    @Required(message = "La categoría es obligatoria")
     private Categoria categoria;
 
-    @Column(length = 30)
-    private String unidad_medida;
+    @Stereotype("MONEY")
+    @Column(name = "precio_venta", nullable = false)
+    @Required
+    private BigDecimal precioVenta;
 
-    @OneToOne(mappedBy = "producto",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY)
+    @Stereotype("MEMO")
+    private String descripcion;
+
+    @OneToOne(mappedBy = "producto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Inventario inventario;
-
-    @PrePersist
-    private void crearInventarioSiNoExiste() {
-        if (inventario == null) {
-            inventario = new Inventario();
-            inventario.setProducto(this);
-            inventario.setStock(0);
-            inventario.setStockMinimo(0);
-            inventario.setStockMaximo(0);
-        }
-    }
 }

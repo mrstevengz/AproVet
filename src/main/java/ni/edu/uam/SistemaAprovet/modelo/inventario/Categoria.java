@@ -22,9 +22,8 @@ public class Categoria {
     @Hidden
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-    private String id_categoria;
+    private String idCategoria;
 
-    // ----- Demas Campos -----
 
     @Column(name = "nombre_categoria", length = 50, nullable = false)
     @Required

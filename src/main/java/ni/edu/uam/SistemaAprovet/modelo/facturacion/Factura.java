@@ -1,48 +1,96 @@
 package ni.edu.uam.SistemaAprovet.modelo.facturacion;
 
-
 import lombok.Getter;
 import lombok.Setter;
+import ni.edu.uam.SistemaAprovet.modelo.core.Cliente;
 import org.hibernate.annotations.GenericGenerator;
-import org.openxava.annotations.DescriptionsList;
-import org.openxava.annotations.Hidden;
-import org.openxava.annotations.Required;
+import org.openxava.annotations.*;
+import org.openxava.calculators.CurrentDateCalculator;
+import org.openxava.calculators.CurrentLocalDateCalculator;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.Date;
-import ni.edu.uam.SistemaAprovet.modelo.core.Cliente;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
+@View(members =
+        "Datos Generales {" +
+                "fechaRegistro, cliente;" +
+                "}" +
+                "Detalles {" +
+                "detalles;" +
+                "}" +
+                "Totales {" +
+                "monto;" +
+                "}"
+)
 public class Factura {
 
     @Id
     @Hidden
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-    private String id_factura;
+    private String oid;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id_cliente")
-    @DescriptionsList(descriptionProperties = "nombre,apellido")
-    @NotNull(message = "Debe seleccionar un cliente para la factura")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @DescriptionsList(descriptionProperties = "nombreCliente, apellidoCliente")
+    @NotNull(message = "Debe seleccionar un cliente")
     private Cliente cliente;
 
-    @Column(name = "fecha_registro", nullable = false)
-    @Temporal(TemporalType.DATE)
-    @NotNull(message = "La fecha de registro es obligatoria")
+    @Column(nullable = false)
     @Required
-    private Date fecha_registro;
+    @Stereotype("DATE")
+    @DefaultValueCalculator(CurrentLocalDateCalculator.class)
+    private LocalDate fechaRegistro;
 
-    @Column(name = "monto", nullable = false, precision = 12, scale = 2)
-    @NotNull(message = "El monto de la factura es obligatorio")
-    @DecimalMin(value = "0.01", message = "El monto debe ser mayor que 0")
-    @Required
-    private float monto;
+    @ElementCollection
+    @ListProperties("producto.nombre, servicio.nombre, cantidad, precioUnitario, subtotal")
+    private List<DetalleFactura> detalles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL)
-    private java.util.Collection<FacturaDetalle> detalles;
+    // =====================
+    //  TOTALES
+    // =====================
+
+    @ReadOnly
+    @Stereotype("MONEY")
+    @Column(nullable = false)
+    private BigDecimal monto = BigDecimal.ZERO;
+
+    // =====================
+    //  LÓGICA DE NEGOCIO
+    // =====================
+
+    @PrePersist
+    @PreUpdate
+    private void procesarFactura() {
+        recalcularTotal();
+        actualizarInventario();
+    }
+
+    private void recalcularTotal() {
+        BigDecimal total = BigDecimal.ZERO;
+        for (DetalleFactura d : detalles) {
+            total = total.add(d.getSubtotal());
+        }
+        this.monto = total;
+    }
+
+    private void actualizarInventario() {
+        for (DetalleFactura d : detalles) {
+            // Lógica: Solo descargamos stock si es un PRODUCTO.
+            // Los servicios no tienen inventario físico.
+            if (d.getProducto() != null && d.getProducto().getInventario() != null) {
+                // Obtenemos el stock actual (evitando nulos)
+                Integer stockActual = d.getProducto().getInventario().getStock();
+                if (stockActual == null) stockActual = 0;
+
+                // RESTAMOS el stock (Venta = Salida)
+                d.getProducto().getInventario().setStock(stockActual - d.getCantidad());
+            }
+        }
+    }
 }

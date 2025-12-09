@@ -5,9 +5,9 @@
 <jasperReport name="ReporteMascota" pageWidth="595" pageHeight="842" columnWidth="555"
               leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 
-    <field name="nombre_mascota" class="java.lang.String"/>
-    <field name="fecha_nacimiento_mascota" class="java.time.LocalDate"/>
-    <field name="genero_mascota" class="java.lang.Enum"/>
+    <field name="nombreMascota" class="java.lang.String"/>
+    <field name="fechaNacimiento" class="java.time.LocalDate"/>
+    <field name="generoMascota" class="java.lang.Enum"/>
     <field name="raza" class="ni.edu.uam.SistemaAprovet.modelo.core.Raza"/>
 
     <title>
@@ -95,7 +95,7 @@
                 <textElement verticalAlignment="Middle">
                     <font size="11"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{nombre_mascota} == null ? "-" : $F{nombre_mascota}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{nombreMascota} == null ? "-" : $F{nombreMascota}]]></textFieldExpression>
             </textField>
 
             <textField isStretchWithOverflow="true">
@@ -111,7 +111,7 @@
                 <textElement verticalAlignment="Middle">
                     <font size="11"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{genero_mascota} == null ? "-" : $F{genero_mascota}.toString()]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{generoMascota} == null ? "-" : $F{generoMascota}.toString()]]></textFieldExpression>
             </textField>
 
             <textField isStretchWithOverflow="true">
@@ -119,7 +119,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font size="11"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{fecha_nacimiento_mascota} == null ? "-" : new java.text.SimpleDateFormat("dd/MM/yyyy").format(java.sql.Date.valueOf($F{fecha_nacimiento_mascota}))]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{fechaNacimiento} == null ? "-" : new java.text.SimpleDateFormat("dd/MM/yyyy").format(java.sql.Date.valueOf($F{fechaNacimiento}))]]></textFieldExpression>
             </textField>
 
         </band>

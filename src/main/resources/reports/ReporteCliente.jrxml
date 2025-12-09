@@ -5,11 +5,11 @@
 <jasperReport name="ReporteCliente" pageWidth="595" pageHeight="842" columnWidth="555"
               leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 
-    <field name="nombre_cliente" class="java.lang.String"/>
-    <field name="apellido_cliente" class="java.lang.String"/>
-    <field name="cedula_cliente" class="java.lang.String"/>
-    <field name="telefono_cliente" class="java.lang.String"/>
-    <field name="direccion_cliente" class="java.lang.String"/>
+    <field name="nombreCliente" class="java.lang.String"/>
+    <field name="apellidoCliente" class="java.lang.String"/>
+    <field name="cedulaCliente" class="java.lang.String"/>
+    <field name="telefonoCliente" class="java.lang.String"/>
+    <field name="direccionCliente" class="java.lang.String"/>
 
     <title>
         <band height="60">
@@ -104,7 +104,7 @@
                 <textElement verticalAlignment="Middle">
                     <font size="10"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{nombre_cliente} == null ? "-" : $F{nombre_cliente}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{nombreCliente} == null ? "-" : $F{nombreCliente}]]></textFieldExpression>
             </textField>
 
             <textField isStretchWithOverflow="true">
@@ -112,7 +112,7 @@
                 <textElement verticalAlignment="Middle">
                     <font size="10"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{apellido_cliente} == null ? "-" : $F{apellido_cliente}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{apellidoCliente} == null ? "-" : $F{apellidoCliente}]]></textFieldExpression>
             </textField>
 
             <textField isStretchWithOverflow="true">
@@ -120,7 +120,7 @@
                 <textElement verticalAlignment="Middle">
                     <font size="10"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{cedula_cliente} == null ? "-" : $F{cedula_cliente}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{cedulaCliente} == null ? "-" : $F{cedulaCliente}]]></textFieldExpression>
             </textField>
 
             <textField isStretchWithOverflow="true">
@@ -128,7 +128,7 @@
                 <textElement verticalAlignment="Middle">
                     <font size="10"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{telefono_cliente} == null ? "-" : $F{telefono_cliente}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{telefonoCliente} == null ? "-" : $F{telefonoCliente}]]></textFieldExpression>
             </textField>
 
             <textField isStretchWithOverflow="true">
@@ -136,7 +136,7 @@
                 <textElement verticalAlignment="Middle">
                     <font size="10"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{direccion_cliente} == null ? "-" : $F{direccion_cliente}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{direccionCliente} == null ? "-" : $F{direccionCliente}]]></textFieldExpression>
             </textField>
         </band>
     </detail>

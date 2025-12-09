@@ -6,9 +6,10 @@
               leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 
     <field name="nombre" class="java.lang.String"/>
-    <field name="tipo_trabajador" class="java.lang.String"/>
+    <field name="cargo" class="java.lang.String"/>
     <field name="cedula" class="java.lang.String"/>
     <field name="telefono" class="java.lang.String"/>
+    <field name="salario" class="java.math.BigDecimal"/>
 
     <title>
         <band height="60">
@@ -20,8 +21,8 @@
             </rectangle>
 
             <staticText>
-                <reportElement x="0" y="10" width="350" height="30"/>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
+                <reportElement x="10" y="10" width="340" height="30"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font size="22" isBold="true"/>
                 </textElement>
                 <text><![CDATA[REPORTE DE TRABAJADORES]]></text>
@@ -32,7 +33,7 @@
                 <textElement textAlignment="Right" verticalAlignment="Middle">
                     <font size="10" isBold="true"/>
                 </textElement>
-                <textFieldExpression><![CDATA["Generado: " + new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(new java.util.Date())]]></textFieldExpression>
+                <textFieldExpression class="java.lang.String"><![CDATA["Generado: " + new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(new java.util.Date())]]></textFieldExpression>
             </textField>
 
             <line>
@@ -51,7 +52,7 @@
             </rectangle>
 
             <staticText>
-                <reportElement x="10" y="0" width="200" height="30"/>
+                <reportElement x="5" y="0" width="180" height="30"/>
                 <textElement verticalAlignment="Middle">
                     <font size="12" isBold="true"/>
                 </textElement>
@@ -59,15 +60,15 @@
             </staticText>
 
             <staticText>
-                <reportElement x="210" y="0" width="135" height="30"/>
+                <reportElement x="185" y="0" width="120" height="30"/>
                 <textElement verticalAlignment="Middle">
                     <font size="12" isBold="true"/>
                 </textElement>
-                <text><![CDATA[TIPO TRABAJADOR]]></text>
+                <text><![CDATA[CARGO]]></text>
             </staticText>
 
             <staticText>
-                <reportElement x="345" y="0" width="110" height="30"/>
+                <reportElement x="305" y="0" width="95" height="30"/>
                 <textElement verticalAlignment="Middle">
                     <font size="12" isBold="true"/>
                 </textElement>
@@ -75,11 +76,19 @@
             </staticText>
 
             <staticText>
-                <reportElement x="455" y="0" width="100" height="30"/>
+                <reportElement x="400" y="0" width="80" height="30"/>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font size="12" isBold="true"/>
                 </textElement>
                 <text><![CDATA[TELÉFONO]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="480" y="0" width="75" height="30"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="12" isBold="true"/>
+                </textElement>
+                <text><![CDATA[SALARIO]]></text>
             </staticText>
         </band>
     </columnHeader>
@@ -91,35 +100,43 @@
             </line>
 
             <textField isStretchWithOverflow="true">
-                <reportElement x="10" y="2" width="200" height="20"/>
+                <reportElement x="5" y="2" width="180" height="20"/>
                 <textElement verticalAlignment="Middle">
-                    <font size="11"/>
+                    <font size="10"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{nombre} == null ? "-" : $F{nombre}]]></textFieldExpression>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{nombre} == null ? "-" : $F{nombre}]]></textFieldExpression>
             </textField>
 
             <textField isStretchWithOverflow="true">
-                <reportElement x="210" y="2" width="135" height="20"/>
+                <reportElement x="185" y="2" width="120" height="20"/>
                 <textElement verticalAlignment="Middle">
-                    <font size="11"/>
+                    <font size="10"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{tipo_trabajador} == null ? "-" : $F{tipo_trabajador}]]></textFieldExpression>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{cargo} == null ? "-" : $F{cargo}]]></textFieldExpression>
             </textField>
 
             <textField isStretchWithOverflow="true">
-                <reportElement x="345" y="2" width="110" height="20"/>
+                <reportElement x="305" y="2" width="95" height="20"/>
                 <textElement verticalAlignment="Middle">
-                    <font size="11"/>
+                    <font size="10"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{cedula} == null ? "-" : $F{cedula}]]></textFieldExpression>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{cedula} == null ? "-" : $F{cedula}]]></textFieldExpression>
             </textField>
 
             <textField isStretchWithOverflow="true">
-                <reportElement x="455" y="2" width="90" height="20"/>
+                <reportElement x="400" y="2" width="80" height="20"/>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font size="11"/>
+                    <font size="10"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{telefono} == null ? "-" : $F{telefono}]]></textFieldExpression>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{telefono} == null ? "-" : $F{telefono}]]></textFieldExpression>
+            </textField>
+
+            <textField isStretchWithOverflow="true">
+                <reportElement x="480" y="2" width="75" height="20"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="10"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{salario} == null ? "-" : new java.text.DecimalFormat("C$ #,##0.00").format($F{salario})]]></textFieldExpression>
             </textField>
         </band>
     </detail>
@@ -129,11 +146,11 @@
             <textField>
                 <reportElement x="435" y="0" width="80" height="20"/>
                 <textElement textAlignment="Right"/>
-                <textFieldExpression><![CDATA["Pág. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+                <textFieldExpression class="java.lang.String"><![CDATA["Pág. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
             </textField>
             <textField evaluationTime="Report">
                 <reportElement x="515" y="0" width="40" height="20"/>
-                <textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+                <textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
             </textField>
         </band>
     </pageFooter>

@@ -3,37 +3,36 @@ package ni.edu.uam.SistemaAprovet.modelo.facturacion;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.openxava.annotations.DescriptionsList;
-import org.openxava.annotations.Hidden;
-import org.openxava.annotations.Required;
+import org.openxava.annotations.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
+@View(members =
+        "nombre;" +
+                "precio;" +
+                "descripcion"
+)
 public class Servicio {
 
-    // ----- PK -----
     @Id
     @Hidden
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-    private String id_servicio;
+    private String oid;
 
-
-    @Column(name = "nombre_servicio", length = 50, nullable = false)
-    @Required
-    @NotBlank(message = "El nombre del servicio es obligatorio")
-    @Size(max = 50, message = "El nombre del servicio no puede superar 50 caracteres")
+    @Column(length = 60, nullable = false)
+    @Required(message = "El nombre del servicio es obligatorio")
     private String nombre;
 
-    @Column(name = "descripcion_servicio", length = 50)
-    @Size(max = 50, message = "La descripción del servicio no puede superar 50 caracteres")
+    @Column(nullable = false)
+    @Required
+    @Stereotype("MONEY")
+    private BigDecimal precio;
+
+    @Stereotype("MEMO")
     private String descripcion;
-
-
-
 }
+

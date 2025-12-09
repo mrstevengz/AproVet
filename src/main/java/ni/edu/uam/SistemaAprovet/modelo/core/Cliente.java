@@ -16,29 +16,31 @@ import javax.persistence.Id;
 @Getter
 @Setter
 
-@View(name = "Simple", members = "nombre, apellido")
+@View(name = "Short", members =
+    "nombreCliente, apellidoCliente"
+)
 public class Cliente {
     @Id
     @Hidden
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-    private String oid_cliente;
+    private String oidCliente;
 
     @Column(length = 60, nullable = false)
     @Required(message = "El nombre de cliente es obligatorio")
-    private String nombre_cliente;
+    private String nombreCliente;
 
     @Column(length = 60, nullable = false)
     @Required(message = "El apellido de cliente es obligatorio")
-    private String apellido_cliente;
+    private String apellidoCliente;
 
     @Column(length = 16, nullable = false, unique = true)
     @Required(message = "La cédula es obligatoria")
-    private String cedula_cliente;
+    private String cedulaCliente;
 
     @Column(length = 15)
-    private String telefono_cliente;
+    private String telefonoCliente;
 
     @Column(length = 100)
-    private String direccion_cliente;
+    private String direccionCliente;
 }
