@@ -1,29 +1,25 @@
 package ni.edu.uam.SistemaAprovet.actions;
 
+import lombok.Setter;
 import ni.edu.uam.SistemaAprovet.modelo.inventario.Producto;
 import org.openxava.util.Messages;
 import org.openxava.validators.IValidator;
 
 import java.math.BigDecimal;
 
+@Setter
 public class ValidacionFactura implements IValidator {
+    // Setters para inyeccion por OpenXava
     private boolean esServicio;
     private Producto producto;
     private String descripcion;
     private BigDecimal precio;
     private BigDecimal cantidad;
 
-    // Setters para inyección por OpenXava
-    public void setEsServicio(boolean esServicio) { this.esServicio = esServicio; }
-    public void setProducto(Producto producto) { this.producto = producto; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
-    public void setPrecio(BigDecimal precio) { this.precio = precio; }
-    public void setCantidad(BigDecimal cantidad) { this.cantidad = cantidad; }
-
     @Override
     public void validate(Messages errors) throws Exception {
 
-        // Validación común
+        // Validacion comun
         if (precio == null || precio.compareTo(BigDecimal.ZERO) <= 0) {
             errors.add("precio_obligatorio_mayor_cero");
         }
@@ -32,7 +28,7 @@ public class ValidacionFactura implements IValidator {
         }
 
         if (esServicio) {
-            // Servicio: debe tener descripción, NO producto
+            // Servicio: debe tener descripcion, NO producto
             if (descripcion == null || descripcion.trim().isEmpty()) {
                 errors.add("descripcion_servicio_obligatoria");
             }

@@ -19,7 +19,7 @@ public class GrabarDetalleCompra extends SaveAction {
         // 1) Guardar el detalle normalmente (INSERT DetalleCompra)
         super.execute();
 
-        // 2) Obtener la clave del detalle recién guardado
+        // 2) Obtener la clave del detalle recien guardado
         Map<String, Object> key = getView().getKeyValues();
         if (key == null || key.isEmpty()) return;
 
@@ -38,7 +38,7 @@ public class GrabarDetalleCompra extends SaveAction {
         Compra compra = detalle.getCompra();
         if (compra != null) {
 
-            // Nos aseguramos que la compra esté gestionada
+            // Nos aseguramos que la compra este gestionada
             compra = em.merge(compra);
 
             Number totalN = (Number) em.createQuery(
@@ -71,26 +71,24 @@ public class GrabarDetalleCompra extends SaveAction {
                 inv.setProducto(detalle.getProducto());
                 inv.setStock(0);
                 inv.setStockMinimo(0);
-                inv.setStockMaximo(0);
                 em.persist(inv);
             } else {
                 inv = lista.get(0);
             }
 
-            // Aseguramos que está gestionado
+            // Aseguramos que este gestionado
             inv = em.merge(inv);
 
             int actual = (inv.getStock() == null) ? 0 : inv.getStock();
             inv.setStock(actual + detalle.getCantidad());
 
-            // Guardamos la relación por si quieres mostrar inventario en el detalle
-            detalle.setInventario(inv);
+
         }
 
-        // 5) Forzamos envío a la BD
+        // 5) Forzamos envio a la BD
         em.flush();
 
-        // 6) Refrescamos la vista raíz (Compra) para ver el total actualizado en pantalla
+        // 6) Refrescamos la vista raiz (Compra) para ver el total actualizado en pantalla
         getView().getRoot().refresh();
     }
 }

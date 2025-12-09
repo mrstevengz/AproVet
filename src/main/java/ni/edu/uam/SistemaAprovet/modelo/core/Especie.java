@@ -20,17 +20,10 @@ public class Especie {
     @Hidden
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-
     private String oid;
 
     @Column(length = 60, nullable = false)
     @Required(message = "El nombre de la especie es requerido.")
     private String nombre;
-
-    @Column(length = 60)
-    private String nombre_cientifico;
-
-    @TextArea
-    private String descripcion;
 
 }

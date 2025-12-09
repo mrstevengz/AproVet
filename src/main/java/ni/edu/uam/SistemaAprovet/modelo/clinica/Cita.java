@@ -2,6 +2,7 @@ package ni.edu.uam.SistemaAprovet.modelo.clinica;
 
 import lombok.Getter;
 import lombok.Setter;
+import ni.edu.uam.SistemaAprovet.modelo.core.Mascota;
 import ni.edu.uam.SistemaAprovet.modelo.core.Veterinario;
 import ni.edu.uam.SistemaAprovet.modelo.facturacion.Servicio;
 import org.hibernate.annotations.GenericGenerator;
@@ -17,30 +18,24 @@ public class Cita {
     @Hidden
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-    private String id_cita;
-
-    @ManyToOne( // La referencia se almacena como una relación en la base de datos)
-            fetch= javax.persistence.FetchType.LAZY, // La referencia se carga bajo demanda
-            optional=false) // La referencia no puede estar sin valor
-    private Historial historial;
-
-    @ManyToOne( // La referencia se almacena como una relación en la base de datos
-            fetch= javax.persistence.FetchType.LAZY, // La referencia se carga bajo demanda
-            optional=false) // La referencia no puede estar sin valor
-    private Veterinario veterinario;
-
-    @ManyToOne( // La referencia se almacena como una relación en la base de datos)
-            fetch= javax.persistence.FetchType.LAZY, // La referencia se carga bajo demanda
-            optional=false) // La referencia no puede estar sin valor
-    private Servicio servicio;
+    private String oidCita;
 
     @Column(name = "fecha_cita", nullable = false)
-    private Date fecha_cita;
+    private Date fechaCita;
 
     @Column(name = "Motivo_cita", length = 200, nullable = false)
     private String motivo;
 
-    @Column(name ="emergencia_cita", nullable = false)
-    private boolean emergencia; // true = si, false = no
+    public enum Estado {Pendiente, Realizada, Cancelada}
 
+    @Column(nullable = false)
+    private Estado estado;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private Mascota mascota;
+
+    @ManyToOne( // La referencia se almacena como una relaciÃ³n en la base de datos
+            fetch= javax.persistence.FetchType.LAZY, // La referencia se carga bajo demanda
+            optional=false) // La referencia no puede estar sin valor
+    private Veterinario veterinario;
 }

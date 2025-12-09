@@ -23,6 +23,4 @@ public class Raza {
     @Column(length = 60, nullable = false)
     private String nombre;
 
-    @TextArea
-    private String descripcion;
 }

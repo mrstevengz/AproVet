@@ -15,30 +15,31 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
-
-@View(name = "Simple", members = "nombre, apellido")
+@View(name = "Short", members =
+        "nombreCliente, apellidoCliente"
+)
 public class Cliente {
     @Id
     @Hidden
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-    private String oid;
+    private String oidCliente;
 
     @Column(length = 60, nullable = false)
     @Required(message = "El nombre de cliente es obligatorio")
-    private String nombre;
+    private String nombreCliente;
 
     @Column(length = 60, nullable = false)
     @Required(message = "El apellido de cliente es obligatorio")
-    private String apellido;
+    private String apellidoCliente;
 
     @Column(length = 16, nullable = false, unique = true)
-    @Required(message = "La cédula es obligatoria")
-    private String cedula;
+    @Required(message = "La cÃ©dula es obligatoria")
+    private String cedulaCliente;
 
     @Column(length = 15)
-    private String telefono;
+    private String telefonoCliente;
 
     @Column(length = 100)
-    private String direccion;
+    private String direccionCliente;
 }
