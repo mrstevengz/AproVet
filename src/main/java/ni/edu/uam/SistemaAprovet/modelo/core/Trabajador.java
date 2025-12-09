@@ -42,7 +42,7 @@ public class Trabajador {
     private LocalDate fechaContratacion;
 
     @Column(length = 100, nullable = false)
-    @Required(message="La contraseña es un campo obligatorio")
+    @Required(message="La contraseÃ±a es un campo obligatorio")
     @Stereotype("PASSWORD")
-    private String contraseña;
+    private String contraseÃ±a;
 }

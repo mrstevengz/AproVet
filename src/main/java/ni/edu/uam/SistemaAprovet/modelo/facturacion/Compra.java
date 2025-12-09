@@ -64,7 +64,7 @@ public class Compra {
     private BigDecimal total = BigDecimal.ZERO;
 
     // =====================
-    //  LÓGICA SEGURA
+    //  LÃ“GICA SEGURA
     // =====================
 
     @PrePersist

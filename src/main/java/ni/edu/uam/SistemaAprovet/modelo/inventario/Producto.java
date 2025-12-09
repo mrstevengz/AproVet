@@ -37,7 +37,7 @@ public class Producto {
     private String oid;
 
     @Column(length = 20, unique = true, nullable = false)
-    @Required(message = "El código es obligatorio")
+    @Required(message = "El cï¿½digo es obligatorio")
     private String codigo;
 
     @Column(length = 100, nullable = false)
@@ -47,7 +47,7 @@ public class Producto {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @DescriptionsList(descriptionProperties = "nombre")
-    @Required(message = "La categoría es obligatoria")
+    @Required(message = "La categorï¿½a es obligatoria")
     private Categoria categoria;
 
     @Stereotype("MONEY")

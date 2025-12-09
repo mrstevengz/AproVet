@@ -2,12 +2,10 @@ package ni.edu.uam.SistemaAprovet.modelo.clinica;
 
 import lombok.Getter;
 import lombok.Setter;
-import ni.edu.uam.SistemaAprovet.modelo.core.Mascota;
 import ni.edu.uam.SistemaAprovet.modelo.core.Veterinario;
 import ni.edu.uam.SistemaAprovet.modelo.facturacion.Servicio;
 import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.Hidden;
-import org.openxava.annotations.Required;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -35,7 +33,7 @@ public class Cita {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Mascota mascota;
 
-    @ManyToOne( // La referencia se almacena como una relación en la base de datos
+    @ManyToOne( // La referencia se almacena como una relaciÃ³n en la base de datos
             fetch= javax.persistence.FetchType.LAZY, // La referencia se carga bajo demanda
             optional=false) // La referencia no puede estar sin valor
     private Veterinario veterinario;

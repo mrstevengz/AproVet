@@ -61,7 +61,7 @@ public class Factura {
     private BigDecimal monto = BigDecimal.ZERO;
 
     // =====================
-    //  LÓGICA DE NEGOCIO
+    //  Lï¿½GICA DE NEGOCIO
     // =====================
 
     @PrePersist
@@ -81,8 +81,8 @@ public class Factura {
 
     private void actualizarInventario() {
         for (DetalleFactura d : detalles) {
-            // Lógica: Solo descargamos stock si es un PRODUCTO.
-            // Los servicios no tienen inventario físico.
+            // Lï¿½gica: Solo descargamos stock si es un PRODUCTO.
+            // Los servicios no tienen inventario fï¿½sico.
             if (d.getProducto() != null && d.getProducto().getInventario() != null) {
                 // Obtenemos el stock actual (evitando nulos)
                 Integer stockActual = d.getProducto().getInventario().getStock();

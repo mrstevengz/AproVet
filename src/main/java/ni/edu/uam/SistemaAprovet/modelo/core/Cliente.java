@@ -35,7 +35,7 @@ public class Cliente {
     private String apellidoCliente;
 
     @Column(length = 16, nullable = false, unique = true)
-    @Required(message = "La cédula es obligatoria")
+    @Required(message = "La cÃ©dula es obligatoria")
     private String cedulaCliente;
 
     @Column(length = 15)
