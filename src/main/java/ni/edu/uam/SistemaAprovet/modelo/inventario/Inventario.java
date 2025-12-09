@@ -3,12 +3,27 @@ package ni.edu.uam.SistemaAprovet.modelo.inventario;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.openxava.annotations.Hidden;
-import org.openxava.annotations.Required;
+import org.openxava.annotations.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+import org.openxava.annotations.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.AssertTrue;
+import java.time.LocalDate;
 
-@Entity @Setter @Getter
+@Entity
+@Getter @Setter
+@View(members =
+        "producto;" +
+                "Existencias {" +
+                "stock, stockMinimo;" +
+                "}" +
+                "Control de Lotes / Vacunas {" +
+                "lote, fechaVencimiento;" +
+                "}"
+)
 public class Inventario {
 
     @Id
@@ -17,19 +32,36 @@ public class Inventario {
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     private String oid;
 
-    @OneToOne
-    @JoinColumn(name = "producto_oid", nullable = false, unique = true)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @ReferenceView("Simple")
     private Producto producto;
 
     @Column(nullable = false)
-    @Required(message = "El stock es obligatorio")
+    @Required
+    @DefaultValueCalculator(value = org.openxava.calculators.IntegerCalculator.class, properties = @PropertyValue(name="value", value="0"))
     private Integer stock;
 
-    @Column(nullable = false)
-    @Required(message = "El stock mínimo es obligatorio")
-    private Integer stockMinimo;
+    @Column(name = "stock_minimo")
+    private Integer stockMinimo = 5;
 
-    @Column(nullable = false)
-    @Required(message = "El stock máximo es obligatorio")
-    private Integer stockMaximo;
+
+    @Column(length = 30)
+    private String lote;
+
+    @Column(name = "fecha_vencimiento")
+    @Stereotype("DATE")
+    private LocalDate fechaVencimiento;
+
+
+    @AssertTrue(message = "Las vacunas requieren Lote y Fecha de Vencimiento obligatorios")
+    private boolean isDatosVacunaCompletos() {
+        if (producto != null && producto.getCategoria() != null) {
+            String nombreCat = producto.getCategoria().getNombre().toUpperCase();
+
+            if (nombreCat.contains("VACUNA")) {
+                return lote != null && !lote.isEmpty() && fechaVencimiento != null;
+            }
+        }
+        return true;
+    }
 }

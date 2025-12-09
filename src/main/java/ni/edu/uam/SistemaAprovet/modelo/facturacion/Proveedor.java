@@ -3,38 +3,45 @@ package ni.edu.uam.SistemaAprovet.modelo.facturacion;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.openxava.annotations.DefaultValueCalculator;
-import org.openxava.annotations.Hidden;
-import org.openxava.annotations.Required;
-import org.openxava.calculators.CurrentLocalDateCalculator;
+import org.openxava.annotations.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.time.LocalDate;
+import javax.persistence.*;
 
 @Entity
 @Getter @Setter
+@View(members =
+        "Datos Principales {" +
+                "nombre, ruc;" +
+                "telefono, contacto;" +
+                "}" +
+                "Direccion {" +
+                "direccion;" +
+                "}"
+)
 public class Proveedor {
+
     @Id
     @Hidden
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     private String oid;
 
-    @Column(length = 100, nullable = false)
-    @Required(message = "El nombre es un campo obligatorio")
+    @Column(length = 60, nullable = false)
+    @Required(message = "El nombre de la empresa/proveedor es obligatorio")
     private String nombre;
 
-    @Column(length = 10, nullable = false)
-    @Required(message = "El teléfono es un campo obligatorio")
+    @Column(length = 20, unique = true)
+    @Required(message = "El RUC es obligatorio")
+    private String ruc;
+
+    @Column(length = 15)
+    @Required
     private String telefono;
 
-    @Column(length = 100, nullable = false)
-    @Required(message = "El email es un campo obligatorio")
-    private String email;
+    @Column(length = 60)
+    private String contacto;
 
-    @DefaultValueCalculator(CurrentLocalDateCalculator.class)
-    private LocalDate fechaRegistro;
+    @Stereotype("MEMO")
+    private String direccion;
+
 }

@@ -3,13 +3,13 @@
 <!DOCTYPE controladores SYSTEM "dtds/controladores.dtd">
 
 <!-- 
-Documentación sobre controladores: 
+DocumentaciÃ³n sobre controladores: 
 https://www.openxava.org/OpenXavaDoc/docs/controllers_es.html
 
 Controladores por defecto, incluidos en OpenXava (puedes extender de ellos):
 https://github.com/openxava/openxava/blob/master/openxava/src/main/resources/xava/default-controllers.xml
  
-Ejemplos de controladores (de la aplicación de pruebas):
+Ejemplos de controladores (de la aplicaciÃ³n de pruebas):
 https://github.com/openxava/openxava/blob/master/openxavatest/src/main/resources/xava/controllers.xml
 -->
 
@@ -19,7 +19,7 @@ https://github.com/openxava/openxava/blob/master/openxavatest/src/main/resources
     <var-entorno nombre="SistemaAprovet_ANYO_DEFECTO" valor="2015"/>
     -->
     
-    <!-- Objeto de sesión:
+    <!-- Objeto de sesiÃ³n:
     <Objeto nombre="SistemaAprovet_anyoActivo" clase="java.lang.Integer" valor="2015" 
             ambito="global"/>
     -->
@@ -28,8 +28,15 @@ https://github.com/openxava/openxava/blob/master/openxavatest/src/main/resources
     <controlador nombre="TypicalConReporte">
         <hereda-de controlador="Typical"/>
 
-        <accion nombre="imprimirMascota" icono="printer" modo="list"
+        <accion nombre="imprimirMascotas" icono="printer" modo="list"
                 clase="ni.edu.uam.SistemaAprovet.actions.report.PrintMascotasReportAction"/>
+
+        <accion nombre="imprimirClientes" icono="printer" modo="list"
+                clase="ni.edu.uam.SistemaAprovet.actions.report.PrintClienteReportAction"/>
+
+        <accion nombre="imprimirTrabajadores" icono="printer" modo="list"
+                clase="ni.edu.uam.SistemaAprovet.actions.report.PrintTrabajadorReportAction"/>
+
     </controlador>
 
 
