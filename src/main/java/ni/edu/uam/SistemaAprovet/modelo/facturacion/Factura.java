@@ -2,16 +2,22 @@ package ni.edu.uam.SistemaAprovet.modelo.facturacion;
 
 import lombok.Getter;
 import lombok.Setter;
-import ni.edu.uam.SistemaAprovet.modelo.core.Cliente; // <-- ajusta el paquete si es distinto
+import ni.edu.uam.SistemaAprovet.modelo.core.Cliente;
 import org.hibernate.annotations.GenericGenerator;
-import org.openxava.annotations.*;
+import org.openxava.annotations.Depends;
+import org.openxava.annotations.ListProperties;
+import org.openxava.annotations.Money;
+import org.openxava.annotations.Required;
+import org.openxava.annotations.Hidden;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collection;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 public class Factura {
 
     @Id
@@ -25,11 +31,7 @@ public class Factura {
     private Cliente cliente;
 
     @Required
-    private LocalDate fechaRegistro;
-
-    @Money
-    @ReadOnly
-    private float monto;
+    private LocalDate fechaRegistro = LocalDate.now();
 
     // ===== COLECCIÓN DE DETALLE =====
     @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -37,19 +39,21 @@ public class Factura {
     private Collection<FacturaDetalle> detalleFactura;
 
     // =========================================
-    //  RECALCULAR TOTAL ANTES DE GUARDAR
+    //  MONTO CALCULADO (NO SE GUARDA EN BD)
     // =========================================
-    @PrePersist
-    @PreUpdate
-    private void recalcularTotal() {
-        float total = 0f;
+    @Money
+    @Depends("detalleFactura.subtotal")
+    @Transient  // <- para que JPA NO lo mapee a una columna
+    public float getMonto() {
+        float total = 0;
+
         if (detalleFactura != null) {
             for (FacturaDetalle d : detalleFactura) {
-                if (d != null && d.getCantidad() != null) {
-                    total += d.getSubtotal();
+                if (d != null && d.getSubtotal() != 0) {
+                    total = total + d.getSubtotal();
                 }
             }
         }
-        this.monto = total;
+        return total;
     }
 }

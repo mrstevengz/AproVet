@@ -34,7 +34,7 @@ public class Compra {
 
     @Required
     @Stereotype("DATE")
-    private LocalDate fechaCompra;
+    private LocalDate fechaCompra = LocalDate.now();
 
     @Stereotype("TEXT_AREA")
     private String descripcion;

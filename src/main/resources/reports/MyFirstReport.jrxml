@@ -1,30 +1,62 @@
-<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
-<jasperReport name="MyFirstReport" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" >
-    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-    <queryString><![CDATA[
+<!-- Created with Jaspersoft Studio version 7.0.3.final -->
+<jasperReport name="MyFirstReport" language="java"
+              pageWidth="595" pageHeight="842"
+              columnWidth="555" leftMargin="20" rightMargin="20"
+              topMargin="20" bottomMargin="20" >
+
+    <property name="com.jaspersoft.studio.data.defaultdataadapter"
+              value="One Empty Record"/>
+
+    <queryString language="SQL"><![CDATA[
         SELECT oid, nombre, apellido, cedula, telefono, direccion FROM cliente
     ]]></queryString>
 
-    <field name="oid" class="java.lang.String"/>
-    <field name="nombre" class="java.lang.String"/>
-    <field name="apellido" class="java.util.String"/>
-    <field name="cedula" class="java.util.String"/>
-    <field name="telefono" class="java.util.String"/>
-    <field name="direccion" class="java.util.String"/>
+    <field name="oid"       class="java.lang.String"/>
+    <field name="nombre"    class="java.lang.String"/>
+    <field name="apellido"  class="java.lang.String"/>
+    <field name="cedula"    class="java.lang.String"/>
+    <field name="telefono"  class="java.lang.String"/>
+    <field name="direccion" class="java.lang.String"/>
 
-	<query language="sql"><![CDATA[]]></query>
-	<background splitType="Stretch"/>
-	<title height="79" splitType="Stretch">
-		<element kind="textField" uuid="3f6436f6-51b6-4406-bcbc-f9f5a42d9419" x="260" y="19" width="50" height="41">
-			<expression><![CDATA[Report]]></expression>
-		</element>
-	</title>
-	<pageHeader height="35" splitType="Stretch"/>
-	<columnHeader height="61" splitType="Stretch"/>
-	<detail>
-		<band height="125" splitType="Stretch"/>
-	</detail>
-	<columnFooter height="45" splitType="Stretch"/>
-	<pageFooter height="54" splitType="Stretch"/>
-	<summary height="42" splitType="Stretch"/>
+    <background>
+        <band height="1" splitType="Stretch"/>
+    </background>
+
+    <title>
+        <band height="60" splitType="Stretch">
+            <staticText>
+                <reportElement x="0" y="10" width="555" height="30"
+                               uuid="3f6436f6-51b6-4406-bcbc-f9f5a42d9419"/>
+                <textElement textAlignment="Center"/>
+                <text><![CDATA[Reporte de Clientes]]></text>
+            </staticText>
+        </band>
+    </title>
+
+    <pageHeader>
+        <band height="20" splitType="Stretch"/>
+    </pageHeader>
+
+    <columnHeader>
+        <band height="20" splitType="Stretch"/>
+    </columnHeader>
+
+    <detail>
+        <band height="20" splitType="Stretch">
+            <!-- Aquí luego pones los textField para cada columna -->
+        </band>
+    </detail>
+
+    <columnFooter>
+        <band height="20" splitType="Stretch"/>
+    </columnFooter>
+
+    <pageFooter>
+        <band height="20" splitType="Stretch"/>
+    </pageFooter>
+
+    <summary>
+        <band height="20" splitType="Stretch"/>
+    </summary>
+
 </jasperReport>

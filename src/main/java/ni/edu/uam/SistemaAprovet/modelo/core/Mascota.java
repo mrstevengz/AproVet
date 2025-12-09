@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.Hidden;
 import org.openxava.annotations.ReferenceView;
 import org.openxava.annotations.Required;
+import org.openxava.util.Messages;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,9 +14,8 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-
-
 public class Mascota {
+
     @Id
     @Hidden
     @GeneratedValue(generator = "system-uuid")
@@ -34,6 +34,18 @@ public class Mascota {
 
     @Required
     private LocalDate fecha_nacimiento;
+
+    // --- Método auxiliar ---
+    public boolean verificarFechaNacimiento() {
+        return fecha_nacimiento == null || !fecha_nacimiento.isAfter(LocalDate.now());
+    }
+
+    // --- Validación a nivel de entidad (app, no BD) ---
+    public void validate(Messages errors) {
+        if (!verificarFechaNacimiento()) {
+            errors.add("La fecha de nacimiento no puede ser mayor que la fecha de hoy.");
+        }
+    }
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @ReferenceView("Simple")

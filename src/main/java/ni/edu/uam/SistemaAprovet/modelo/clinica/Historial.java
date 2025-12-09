@@ -29,5 +29,5 @@ public class Historial {
 
     @Column(nullable = false)
     @DefaultValueCalculator(CurrentLocalDateCalculator.class)
-    private LocalDate fecha_creacion;
+    private LocalDate fecha_creacion = LocalDate.now();
 }
