@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Getter
@@ -24,6 +25,11 @@ public class Especie {
 
     @Column(length = 60, nullable = false)
     @Required(message = "El nombre de la especie es requerido.")
+    @Pattern(regexp = ".*[^0-9].*", message = "El nombre no puede contener solo números, debe incluir letras")
+    @Pattern(
+            regexp = "^[\\p{L}][\\p{L}\\s.,'-]*$",
+            message = "Solo se permiten letras y algunos signos (.,'-) y debe iniciar con una letra"
+    )
     private String nombre;
 
 }

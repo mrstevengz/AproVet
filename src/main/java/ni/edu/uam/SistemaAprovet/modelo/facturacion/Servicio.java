@@ -6,13 +6,14 @@ import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.PositiveOrZero; // <--- 1. IMPORTAR ESTO
 import java.math.BigDecimal;
 
 @Entity
 @Getter @Setter
 @View(members =
         "nombre;" +
-                "precio;" +
                 "descripcion"
 )
 public class Servicio {
@@ -25,14 +26,20 @@ public class Servicio {
 
     @Column(length = 60, nullable = false)
     @Required(message = "El nombre del servicio es obligatorio")
+    @Pattern(regexp = ".*[^0-9].*", message = "El nombre no puede contener solo números, debe incluir letras")
+    @Pattern(
+            regexp = "^[\\p{L}][\\p{L}\\s.,'-]*$",
+            message = "Solo se permiten letras y algunos signos (.,'-) y debe iniciar con una letra"
+    )
     private String nombre;
 
-    @Column(nullable = false)
-    @Required
-    @Stereotype("MONEY")
-    private BigDecimal precio;
+
 
     @Stereotype("MEMO")
+    @Pattern(regexp = ".*[^0-9].*", message = "El nombre no puede contener solo números, debe incluir letras")
+    @Pattern(
+            regexp = "^[\\p{L}][\\p{L}\\s.,'-]*$",
+            message = "Solo se permiten letras y algunos signos (.,'-) y debe iniciar con una letra"
+    )
     private String descripcion;
 }
-

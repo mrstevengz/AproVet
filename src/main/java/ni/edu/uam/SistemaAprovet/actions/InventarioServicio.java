@@ -36,7 +36,7 @@ public class InventarioServicio {
 
             // Valores por defecto validos (? 0 para que no fallen validaciones)
             inv.setStockMinimo(1);   // luego lo cambias en Inventario
-            inv.setStockMaximo(1);   // idem
+            // idem
 
             em.persist(inv);
             return inv;

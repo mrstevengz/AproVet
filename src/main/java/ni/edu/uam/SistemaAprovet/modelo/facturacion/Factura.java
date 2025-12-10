@@ -4,30 +4,21 @@ import lombok.Getter;
 import lombok.Setter;
 import ni.edu.uam.SistemaAprovet.modelo.core.Cliente;
 import org.hibernate.annotations.GenericGenerator;
-import org.openxava.annotations.*;
-import org.openxava.calculators.CurrentDateCalculator;
-import org.openxava.calculators.CurrentLocalDateCalculator;
+import org.openxava.annotations.Depends;
+import org.openxava.annotations.ListProperties;
+import org.openxava.annotations.Money;
+import org.openxava.annotations.Required;
+import org.openxava.annotations.Hidden;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 @Entity
-@Getter @Setter
-@View(members =
-        "Datos Generales {" +
-                "fechaRegistro, cliente;" +
-                "}" +
-                "Detalles {" +
-                "detalles;" +
-                "}" +
-                "Totales {" +
-                "monto;" +
-                "}"
-)
+@Getter
+@Setter
 public class Factura {
 
     @Id
@@ -36,61 +27,35 @@ public class Factura {
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
     private String oid;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @DescriptionsList(descriptionProperties = "nombreCliente, apellidoCliente")
-    @NotNull(message = "Debe seleccionar un cliente")
+    @ManyToOne(optional = false)
+    @Required
     private Cliente cliente;
 
-    @Column(nullable = false)
     @Required
-    @Stereotype("DATE")
-    @DefaultValueCalculator(CurrentLocalDateCalculator.class)
-    private LocalDate fechaRegistro;
+    @PastOrPresent(message = "La fecha de registro no puede ser mayor al día de hoy")
+    private LocalDate fechaRegistro = LocalDate.now();
 
-    @ElementCollection
-    @ListProperties("producto.nombre, servicio.nombre, cantidad, precioUnitario, subtotal")
-    private List<DetalleFactura> detalles = new ArrayList<>();
+    // ===== COLECCIÓN DE DETALLE =====
+    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ListProperties("esServicio, producto.nombre, servicio.nombre, cantidad, precioUnitario, subtotal")
+    private Collection<DetalleFactura> detalleFactura;
 
-    // =====================
-    //  TOTALES
-    // =====================
+    // =========================================
+    //  MONTO CALCULADO (NO SE GUARDA EN BD)
+    // =========================================
+    @Money
+    @Depends("detalleFactura.subtotal")
+    @Transient  // <- para que JPA NO lo mapee a una columna
+    public float getMonto() {
+        float total = 0;
 
-    @ReadOnly
-    @Stereotype("MONEY")
-    @Column(nullable = false)
-    private BigDecimal monto = BigDecimal.ZERO;
-
-    // =====================
-    //  Lï¿½GICA DE NEGOCIO
-    // =====================
-
-    @PrePersist
-    @PreUpdate
-    private void procesarFactura() {
-        recalcularTotal();
-        actualizarInventario();
-    }
-
-    private void recalcularTotal() {
-        BigDecimal total = BigDecimal.ZERO;
-        for (DetalleFactura d : detalles) {
-            total = total.add(d.getSubtotal());
-        }
-        this.monto = total;
-    }
-
-    private void actualizarInventario() {
-        for (DetalleFactura d : detalles) {
-            // Lï¿½gica: Solo descargamos stock si es un PRODUCTO.
-            // Los servicios no tienen inventario fï¿½sico.
-            if (d.getProducto() != null && d.getProducto().getInventario() != null) {
-                // Obtenemos el stock actual (evitando nulos)
-                Integer stockActual = d.getProducto().getInventario().getStock();
-                if (stockActual == null) stockActual = 0;
-
-                // RESTAMOS el stock (Venta = Salida)
-                d.getProducto().getInventario().setStock(stockActual - d.getCantidad());
+        if (detalleFactura != null) {
+            for (DetalleFactura d : detalleFactura) {
+                if (d != null && d.getSubtotal() != 0) {
+                    total = total + d.getSubtotal();
+                }
             }
         }
+        return total;
     }
 }

@@ -37,9 +37,9 @@
 	<!-- PostgreSQL -->
     <Resource name="jdbc/SistemaAprovetDS" auth="Container" type="javax.sql.DataSource"
 	      maxTotal="20" maxIdle="5" maxWaitMillis="10000"
-	      username="postgres" password="123"
+	      username="postgres" password="fernando"
 	      driverClassName="org.postgresql.Driver" 
-	      url="jdbc:postgresql://localhost/Aprovet"/>
+	      url="jdbc:postgresql://localhost/Aprovet7"/>
 	-->
 	
 	<!-- Oracle 

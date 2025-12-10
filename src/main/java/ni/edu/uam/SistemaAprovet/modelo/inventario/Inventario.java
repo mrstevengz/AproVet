@@ -4,13 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.*;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
-import org.openxava.annotations.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Min;
 import java.time.LocalDate;
 
 @Entity
@@ -18,10 +15,10 @@ import java.time.LocalDate;
 @View(members =
         "producto;" +
                 "Existencias {" +
-                "stock, stockMinimo;" +
+                "   stock, stockMinimo;" +
                 "}" +
                 "Control de Lotes / Vacunas {" +
-                "lote, fechaVencimiento;" +
+                "   lote, fechaVencimiento;" +
                 "}"
 )
 public class Inventario {
@@ -36,14 +33,21 @@ public class Inventario {
     @ReferenceView("Simple")
     private Producto producto;
 
+    // STOCK: no nulo y no negativo
     @Column(nullable = false)
     @Required
-    @DefaultValueCalculator(value = org.openxava.calculators.IntegerCalculator.class, properties = @PropertyValue(name="value", value="0"))
+    @Min(value = 0, message = "El stock no puede ser negativo")
+    @DefaultValueCalculator(
+            value = org.openxava.calculators.IntegerCalculator.class,
+            properties = @PropertyValue(name = "value", value = "0")
+    )
     private Integer stock;
 
-    @Column(name = "stock_minimo")
+    // STOCK MÍNIMO: no negativo
+    @Column(name = "stock_minimo", nullable = false)
+    @Required
+    @Min(value = 0, message = "El stock mínimo no puede ser negativo")
     private Integer stockMinimo = 5;
-
 
     @Column(length = 30)
     private String lote;
@@ -52,7 +56,7 @@ public class Inventario {
     @Stereotype("DATE")
     private LocalDate fechaVencimiento;
 
-
+    // ===== VALIDACIÓN PARA VACUNAS =====
     @AssertTrue(message = "Las vacunas requieren Lote y Fecha de Vencimiento obligatorios")
     private boolean isDatosVacunaCompletos() {
         if (producto != null && producto.getCategoria() != null) {
@@ -63,5 +67,14 @@ public class Inventario {
             }
         }
         return true;
+    }
+
+    // ===== VALIDACIÓN RELACIÓN STOCK vs STOCK MÍNIMO =====
+    @AssertTrue(message = "El stock no puede ser menor que el stock mínimo")
+    private boolean isStockMayorIgualStockMinimo() {
+        // Mientras el usuario escribe, evita romper si algo está vacío
+        if (stock == null || stockMinimo == null) return true;
+
+        return stock >= stockMinimo;
     }
 }

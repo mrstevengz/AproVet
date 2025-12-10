@@ -6,15 +6,18 @@ import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.*;
 import org.openxava.calculators.CurrentLocalDateCalculator;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
+@Tab(properties="fecha, indicaciones, numeroMedicamentos")
+@View(members =
+        "fecha;" +
+                "indicaciones;" +
+                "detalles"
+)
 public class Receta {
     @Id
     @Hidden
@@ -32,6 +35,9 @@ public class Receta {
     @ListProperties("producto.nombre, dosis, frecuencia, duracion")
     private java.util.List<DetalleReceta> detalles;
 
-
-
+    @Transient
+    @Depends("detalles") //
+    public int getNumeroMedicamentos() {
+        return detalles != null ? detalles.size() : 0;
+    }
 }

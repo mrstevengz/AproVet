@@ -9,6 +9,7 @@ import org.openxava.annotations.Hidden;
 import org.openxava.calculators.CurrentLocalDateCalculator;
 
 import javax.persistence.*;
+import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
 
 @Entity
@@ -29,5 +30,6 @@ public class Historial {
 
     @Column(nullable = false)
     @DefaultValueCalculator(CurrentLocalDateCalculator.class)
-    private LocalDate fecha_creacion;
+    @PastOrPresent(message = "La fecha de creación no puede ser en el futuro")
+    private LocalDate fecha_creacion = LocalDate.now();
 }
