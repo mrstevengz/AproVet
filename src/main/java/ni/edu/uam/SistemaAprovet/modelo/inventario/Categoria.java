@@ -32,12 +32,20 @@ public class Categoria {
     @Size(max = 50, message = "El nombre de la categoría no puede superar 50 caracteres")
     // Esta expresión regular obliga a que haya al menos un caracter que NO sea número
     @Pattern(regexp = ".*[^0-9].*", message = "El nombre no puede contener solo números, debe incluir letras")
+    @Pattern(
+            regexp = "^[\\p{L}][\\p{L}\\s.,'-]*$",
+            message = "Solo se permiten letras y algunos signos (.,'-) y debe iniciar con una letra"
+    )
     private String nombre;
 
     @Column(name = "descripcion_categoria", length = 50)
     @Size(max = 50, message = "La descripción de la categoría no puede superar 50 caracteres")
     // Lo mismo para la descripción
-    @Pattern(regexp = ".*[^0-9].*", message = "La descripción no puede contener solo números")
+    @Pattern(regexp = ".*[^0-9].*", message = "El nombre no puede contener solo números, debe incluir letras")
+    @Pattern(
+            regexp = "^[\\p{L}][\\p{L}\\s.,'-]*$",
+            message = "Solo se permiten letras y algunos signos (.,'-) y debe iniciar con una letra"
+    )
     private String descripcion;
 
 }

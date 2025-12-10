@@ -26,7 +26,11 @@ public class Mascota {
 
     @Column(length = 60, nullable = false)
     @Required(message = "El nombre de la mascota es obligatorio")
-    @Pattern(regexp = ".*[^0-9].*", message = "El nombre no puede contener solo números, debe incluir letras")
+    @Pattern(regexp = ".*[^0-9].*", message = "El apellido no puede contener solo números, debe incluir letras")
+    @Pattern(
+            regexp = "^[\\p{L}][\\p{L}\\s.,'-]*$",
+            message = "Solo se permiten letras y algunos signos (.,'-) y debe iniciar con una letra"
+    )
     private String nombreMascota;
 
     public enum Genero {MACHO, HEMBRA}

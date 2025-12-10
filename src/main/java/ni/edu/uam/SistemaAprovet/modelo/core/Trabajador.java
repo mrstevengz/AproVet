@@ -8,6 +8,7 @@ import org.openxava.annotations.Required;
 import org.openxava.annotations.Stereotype;
 
 import javax.persistence.*;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;        // <--- Importante
 import javax.validation.constraints.PositiveOrZero; // <--- Importante
 import java.math.BigDecimal;
@@ -44,6 +45,7 @@ public class Trabajador {
     private String telefono;
 
     @Required
+    @PastOrPresent(message = "La fecha de contratación no puede ser mayor al día de hoy")
     private LocalDate fechaContratacion;
 
     @Column(length = 100, nullable = false)

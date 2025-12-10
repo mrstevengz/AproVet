@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.PositiveOrZero; // <--- 1. IMPORTAR ESTO
 import java.math.BigDecimal;
 
@@ -13,20 +14,19 @@ import java.math.BigDecimal;
 @Getter @Setter
 
 @View(members =
-        "Datos Generales {" +
+        "DatosGenerales {" +
                 "codigo, categoria;" +
                 "nombre;" +
-                "precioVenta;" +
-                "}" +
                 "Descripcion {" +
                 "descripcion;" +
                 "}" +
                 "Inventario {" +
                 "inventario;" +
-                "}"
+                "}"+
+        "}"
 )
 
-@View(name = "Simple", members = "codigo, nombre, precioVenta")
+@View(name = "Simple", members = "codigo, nombre")
 
 public class Producto {
 
@@ -38,11 +38,20 @@ public class Producto {
 
     @Column(length = 20, unique = true, nullable = false)
     @Required(message = "El código es obligatorio")
+    @Pattern(
+            regexp = "^(?=.*\\p{L})(?=.*\\d)(?=.*-)[\\p{L}\\d-]+$",
+            message = "El codigo debe contener letras, números y al menos un guion (-), y solo puede usar letras, números y guiones"
+    )
     private String codigo;
 
     @Column(length = 100, nullable = false)
     @Required(message = "El nombre del producto es obligatorio")
     @SearchKey
+    @Pattern(regexp = ".*[^0-9].*", message = "El nombre no puede contener solo números, debe incluir letras")
+    @Pattern(
+            regexp = "^[\\p{L}][\\p{L}\\s.,'-]*$",
+            message = "Solo se permiten letras y algunos signos (.,'-) y debe iniciar con una letra"
+    )
     private String nombre;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -50,11 +59,6 @@ public class Producto {
     @Required(message = "La categoría es obligatoria")
     private Categoria categoria;
 
-    @Stereotype("MONEY")
-    @Column(name = "precio_venta", nullable = false)
-    @Required
-    @PositiveOrZero(message = "El precio de venta no puede ser negativo")
-    private BigDecimal precioVenta;
 
     @Stereotype("MEMO")
     private String descripcion;
