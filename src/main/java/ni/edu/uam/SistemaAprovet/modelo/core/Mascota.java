@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
 
 @Entity
@@ -32,7 +33,8 @@ public class Mascota {
     @Required(message = "El genero de mascota es obligatorio")
     private Genero generoMascota;
 
-    @Required
+    @Required(message = "La fecha de nacimiento es obligatoria")
+    @PastOrPresent(message = "La fecha de nacimiento no puede ser mayor al día de hoy")
     private LocalDate fechaNacimiento;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

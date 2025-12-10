@@ -11,6 +11,7 @@ import org.openxava.annotations.Required;
 import org.openxava.annotations.Hidden;
 
 import javax.persistence.*;
+import javax.validation.constraints.PastOrPresent;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -31,6 +32,7 @@ public class Factura {
     private Cliente cliente;
 
     @Required
+    @PastOrPresent(message = "La fecha de registro no puede ser mayor al día de hoy")
     private LocalDate fechaRegistro = LocalDate.now();
 
     // ===== COLECCIÓN DE DETALLE =====

@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ public class Compra {
 
     @Required
     @Stereotype("DATE")
+    @PastOrPresent(message = "La fecha de compra no puede ser mayor al día de hoy")
     private LocalDate fechaCompra = LocalDate.now();
 
     @Stereotype("TEXT_AREA")
