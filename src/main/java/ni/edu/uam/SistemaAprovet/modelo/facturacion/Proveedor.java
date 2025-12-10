@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Getter @Setter
@@ -28,6 +29,7 @@ public class Proveedor {
 
     @Column(length = 60, nullable = false)
     @Required(message = "El nombre de la empresa/proveedor es obligatorio")
+    @Pattern(regexp = ".*[^0-9].*", message = "El nombre no puede contener solo números, debe incluir letras")
     private String nombre;
 
     @Column(length = 20, unique = true)

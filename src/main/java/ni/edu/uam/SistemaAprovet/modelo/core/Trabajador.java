@@ -8,6 +8,8 @@ import org.openxava.annotations.Required;
 import org.openxava.annotations.Stereotype;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;        // <--- Importante
+import javax.validation.constraints.PositiveOrZero; // <--- Importante
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -23,6 +25,7 @@ public class Trabajador {
 
     @Column(length = 100, nullable = false)
     @Required(message="El nombre es un campo obligatorio")
+    @Pattern(regexp = ".*[^0-9].*", message = "El nombre no puede contener solo números, debe incluir letras")
     private String nombre;
 
     @Column(length = 40)
@@ -33,9 +36,11 @@ public class Trabajador {
 
     @Column(length = 10, nullable = false)
     @Stereotype("MONEY")
+    @PositiveOrZero(message = "El salario no puede ser negativo")
     private BigDecimal salario;
 
     @Column(length = 12, nullable = false)
+    @Pattern(regexp = "\\d+", message = "El teléfono solo debe contener dígitos numéricos")
     private String telefono;
 
     @Required

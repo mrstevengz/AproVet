@@ -7,6 +7,7 @@ import org.openxava.annotations.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
 @Entity
@@ -25,6 +26,7 @@ public class Mascota {
 
     @Column(length = 60, nullable = false)
     @Required(message = "El nombre de la mascota es obligatorio")
+    @Pattern(regexp = ".*[^0-9].*", message = "El nombre no puede contener solo números, debe incluir letras")
     private String nombreMascota;
 
     public enum Genero {MACHO, HEMBRA}

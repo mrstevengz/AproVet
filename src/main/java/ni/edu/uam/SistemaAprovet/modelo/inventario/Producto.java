@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.PositiveOrZero; // <--- 1. IMPORTAR ESTO
 import java.math.BigDecimal;
 
 @Entity
@@ -25,7 +26,6 @@ import java.math.BigDecimal;
                 "}"
 )
 
-
 @View(name = "Simple", members = "codigo, nombre, precioVenta")
 
 public class Producto {
@@ -37,7 +37,7 @@ public class Producto {
     private String oid;
 
     @Column(length = 20, unique = true, nullable = false)
-    @Required(message = "El c�digo es obligatorio")
+    @Required(message = "El código es obligatorio")
     private String codigo;
 
     @Column(length = 100, nullable = false)
@@ -47,12 +47,13 @@ public class Producto {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @DescriptionsList(descriptionProperties = "nombre")
-    @Required(message = "La categor�a es obligatoria")
+    @Required(message = "La categoría es obligatoria")
     private Categoria categoria;
 
     @Stereotype("MONEY")
     @Column(name = "precio_venta", nullable = false)
     @Required
+    @PositiveOrZero(message = "El precio de venta no puede ser negativo")
     private BigDecimal precioVenta;
 
     @Stereotype("MEMO")

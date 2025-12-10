@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Getter
@@ -27,10 +28,12 @@ public class Cliente {
 
     @Column(length = 60, nullable = false)
     @Required(message = "El nombre de cliente es obligatorio")
+    @Pattern(regexp = ".*[^0-9].*", message = "El nombre no puede contener solo números, debe incluir letras")
     private String nombreCliente;
 
     @Column(length = 60, nullable = false)
     @Required(message = "El apellido de cliente es obligatorio")
+    @Pattern(regexp = ".*[^0-9].*", message = "El apellido no puede contener solo números, debe incluir letras")
     private String apellidoCliente;
 
     @Column(length = 16, nullable = false, unique = true)
@@ -38,6 +41,7 @@ public class Cliente {
     private String cedulaCliente;
 
     @Column(length = 15)
+    @Pattern(regexp = "\\d+", message = "El telefono solo puede contener dígitos y no puede ser negativo")
     private String telefonoCliente;
 
     @Column(length = 100)
